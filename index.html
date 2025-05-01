@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>推播公告板</title>
+  <style>
+    body {
+      font-family: "Arial", sans-serif;
+      background-color: #f0f2f5;
+      margin: 0;
+      padding: 20px;
+    }
+    #messages {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .message {
+      background-color: #fff;
+      border-left: 6px solid #007acc;
+      padding: 16px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+    .message h3 {
+      margin: 0 0 10px 0;
+      font-size: 22px;
+      color: #007acc;
+    }
+    .message .date {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 10px;
+    }
+    .message p {
+      margin: 0;
+      font-size: 16px;
+      white-space: pre-line;
+    }
+  </style>
+</head>
+<body>
+  <h1 style="text-align:center;">📢 最新推播公告</h1>
+  <div id="messages"></div>
+
+  <script>
+    const repoOwner = 'Sumo0711';
+    const repoName = 'GitHub_Issues';
+    const targetUsers = ['Sumo0711', 'user2', 'user3'];
+
+    function formatDate(isoString) {
+      const date = new Date(isoString);
+      const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+      return date.toLocaleDateString('zh-TW', options);
+    }
+
+    fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/issues`)
+      .then(response => response.json())
+      .then(issues => {
+        const container = document.getElementById('messages');
+        issues.forEach(issue => {
+          if (targetUsers.includes(issue.user.login)) {  // 檢查 Issue 作者是否在 targetUsers 陣列中
+            const div = document.createElement('div');
+            div.classList.add('message');
+            const dateStr = formatDate(issue.created_at);
+            div.innerHTML = `
+              <h3>${issue.title}</h3>
+              <div class="date">發布日期：${dateStr}</div>
+              <p>${issue.body}</p>
+            `;
+            container.appendChild(div);
+          }
+        });
+      })
+      .catch(error => {
+        console.error('無法載入推播消息:', error);
+      });
+  </script>
+</body>
+</html>
