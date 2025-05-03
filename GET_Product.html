@@ -33,6 +33,32 @@
     .error {
       color: red;
     }
+    .back-button {
+    text-align: center;
+    margin-top: 30px;
+  }
+
+  .styled-button {
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    border: none;
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    padding: 12px 28px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .styled-button:hover {
+    background: linear-gradient(135deg, #5a0eb4, #1e63e5);
+    transform: scale(1.04);
+  }
+
+  .styled-button:active {
+    transform: scale(0.98);
+  }
   </style>
 </head>
 <body>
@@ -45,6 +71,11 @@
     <p id="productPrice" class="price"></p>
     <p id="productDescription"></p>
     <p id="errorMsg" class="error"></p>
+    <div class="back-button">
+      <a href="menu1.html">
+        <button class="styled-button">⬅ 回到菜單首頁</button>
+      </a>
+    </div>
   </div>
 
   <script>
