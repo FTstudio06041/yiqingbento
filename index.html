@@ -338,7 +338,7 @@
             <div class="menu">
                 <section class="section menu-item" id="menu-item">
                     <div class="item">
-                        <img src="images/chicken_leg_meal.jpg" alt="雞腿飯">
+                        <img src="img/chicken_leg_meal.jpg" alt="雞腿飯">
                         <h3>雞腿飯</h3>
                     </div>
                     <div class="item">
@@ -417,8 +417,8 @@
                     div.classList.add('message');
                     div.innerHTML = `
                         <h3>${latestIssue.title}</h3>
-                        <div class="date">發布日期：${formatDate(latestIssue.created_at)}</div>
                         <p>${latestIssue.body}</p>
+                        <div class="date">發布日期：${formatDate(latestIssue.created_at)}</div>
                     `;
                     messages.appendChild(div);
                 }
@@ -440,8 +440,8 @@
                         div.classList.add('message');
                         div.innerHTML = `
                             <h3>${issue.title}</h3>
-                            <div class="date">發布日期：${formatDate(issue.created_at)}</div>
                             <p>${issue.body}</p>
+                            <div class="date">發布日期：${formatDate(issue.created_at)}</div>
                         `;
                         modalMessages.appendChild(div);
                     });
