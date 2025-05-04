@@ -487,8 +487,8 @@
                     div.classList.add('message');
                     div.innerHTML = `
                         <h3>${issue.title}</h3>
-                        <div class="date">發布日期：${formatDate(issue.created_at)}</div>
                         <p>${issue.body}</p>
+                        <div class="date">發布日期：${formatDate(issue.created_at)}</div>
                     `;
                     modalMessages.appendChild(div);
                 });
