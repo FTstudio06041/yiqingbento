@@ -11,7 +11,7 @@
             padding: 0;
             background: #ffffff;
         }
-
+        /*背景*/
         .circle {
             position: fixed;
             top: -50vmin;
@@ -22,19 +22,18 @@
             background-color: #d98600;
             z-index: -1;
         }
-
-            .circle::after {
-                content: "";
-                position: inherit;
-                right: -50vmin;
-                bottom: -50vmin;
-                width: inherit;
-                height: inherit;
-                border-radius: inherit;
-                background: #311e00;
-                z-index: -1;
-            }
-
+        .circle::after{
+            content: "";
+            position: inherit;
+            right: -50vmin;
+            bottom: -50vmin;
+            width: inherit;
+            height: inherit;
+            border-radius: inherit;
+            background: #311e00;
+            z-index: -1;
+        }
+        /*導覽列*/
         header {
             position: relative;
             background-color: #ffffff;
@@ -44,45 +43,53 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
-            header h1 {
-                margin: 0;
-                font-size: 2em;
-            }
-
-        nav {
+        .name-status-wrapper {
             display: flex;
-            padding: 2% 6%;
+            flex-wrap: wrap;
             justify-content: space-between;
-            align-items: center;
+            gap: 5%;
         }
 
+        header h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+
+        .open-status {
+        font-size: 16px;
+        margin-top: 5px;
+        }
+
+        nav {
+           display: flex;
+           padding: 2% 6%;
+           justify-content: space-between;
+           align-items: center; 
+        }
         .nav-links {
             flex: 1;
             text-align: right;
         }
-
-            .nav-links ul li {
-                list-style: none;
-                display: inline-block;
-                padding: 6px;
-                padding-right: 20%;
-                position: relative;
-            }
-
-                .nav-links ul li a {
-                    position: relative;
-                    display: inline-block;
-                    color: #000000;
-                    text-decoration: none;
-                    font-size: 20px;
-                    transition: transform 0.2s ease, color 0.2s ease;
-                }
-
-                    .nav-links ul li a:hover {
-                        color: #d98600;
-                        text-decoration: none;
-                        transform: scale(1.3);
-                    }
+        .nav-links ul li {
+            list-style: none;
+            display: inline-block;
+            padding: 6px;
+            padding-right: 20%;
+            position: relative;
+        }
+        .nav-links ul li a{
+            position: relative;
+            display: inline-block;
+            color: #000000;
+            text-decoration: none;
+            font-size: 20px;
+            transition: transform 0.2s ease, color 0.2s ease;
+        }
+        .nav-links ul li a:hover{
+            color: #d98600;
+            text-decoration: none;
+            transform: scale(1.3);
+        }                       
 
         .container {
             max-width: 1200px;
@@ -90,91 +97,101 @@
             padding: 1em;
         }
 
+        /*最新消息*/
         #messages {
-            max-width: 700px;
-            margin: 0;
-            margin-right: auto;
-            padding-left: 1em;
+        max-width: 700px;
+        margin: 0;
+        margin-right: auto;
+        padding-left: 1em;
         }
-
         .message {
-            background: hsla(0, 0%, 0%, 0); /* 半透明白底 */
-            backdrop-filter: blur(40px); /* 模糊效果 */
-            -webkit-backdrop-filter: blur(10px); /* Safari 支援 */
-            border-left: 6px solid #ff9d00;
-            padding: 16px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        background: hsla(0, 0%, 0%, 0); /* 半透明白底 */
+        backdrop-filter: blur(40px);           /* 模糊效果 */
+        -webkit-backdrop-filter: blur(10px);   /* Safari 支援 */
+        border-left: 6px solid #ff9d00;
+        padding: 16px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
         }
-
-            .message h3 {
-                margin: 0 0 10px 0;
-                font-size: 22px;
-                color: #ff9d00;
-            }
-
-            .message .date {
-                font-size: 14px;
-                color: #666;
-                margin-bottom: 10px;
-            }
-
-            .message p {
-                margin: 0;
-                font-size: 16px;
-                white-space: pre-line;
-            }
-
+        .message h3 {
+        margin: 0 0 10px 0;
+        font-size: 22px;
+        color: #ff9d00;
+        }
+        .message .date {
+        font-size: 14px;
+        color: #666;
+        margin-bottom: 10px;
+        }
+        .message p {
+        margin: 0;
+        font-size: 16px;
+        white-space: pre-line;
+        }
         #showMore {
             outline: none;
             border: none;
         }
-
         .modal-content {
             position: relative;
-            width: 75vw;
+            width: 75vw; 
             height: 50vh;
-            background: rgba(255, 255, 255, 0.875);
+            background: rgba(255, 255, 255, 0.875); 
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 15px;
             padding: 2em;
             overflow-y: auto;
+            scrollbar-width: none;
             animation: modalFadeIn 0.1s ease-out;
         }
-
         .modal-fade-out {
             animation: modalFadeOut 0.2s ease-out forwards;
         }
-
         .close {
+            position: fixed;
             font-size: 1.8em;
+            top: 1em;
+            right: 1em;
+            cursor: pointer;
             color: #333;
             transition: transform 0.2s ease, color 0.2s ease;
         }
-
-            .close:hover {
-                transform: scale(1.2);
-                color: #ff704d;
-            }
-
+        .close:hover {
+            transform: scale(1.2);
+            color: #ff704d;
+        }
 
         .section {
             margin-bottom: 2em;
         }
 
-            .section h2 {
-                font-size: 1.5em;
-                border-bottom: 2px solid #ffcc99;
-                padding-bottom: 0.5em;
-            }
+        .section h2 {
+            font-size: 1.5em;
+            border-bottom: 2px solid #ffcc99;
+            padding-bottom: 0.5em;
+        }
+
+        .news-about-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 2%;
+            margin-top: 2em;
+        }
+
+        .news-about-wrapper .news,
+        .news-about-wrapper .about {
+            flex: 0.5 0.5 40%;
+            max-width: 50%;
+        }
 
         .glass {
             background: hsla(0, 0%, 100%, 0.8); /* 半透明白底 */
-            backdrop-filter: blur(10px); /* 模糊效果 */
-            -webkit-backdrop-filter: blur(10px); /* Safari 支援 */
+            backdrop-filter: blur(10px);           /* 模糊效果 */
+            -webkit-backdrop-filter: blur(10px);   /* Safari 支援 */
             border-radius: 15px;
             padding: 2em;
             border: 1px solid rgba(255, 255, 255, 0.3);
@@ -225,9 +242,9 @@
             transition: background-color 0.3s;
         }
 
-            .btn:hover {
-                background-color: #ff704d;
-            }
+         .btn:hover {
+            background-color: #ff704d;
+        }
 
         footer {
             background-color: #333;
@@ -246,46 +263,35 @@
             right: 20px;
             background-color: #ff9966;
             color: #fff;
-            padding: 0.5em 1em;
-            border-radius: 50%;
+            padding: 0.6em 1em;
+            border-radius: 20%;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
             text-decoration: none;
             font-size: 1.5em;
             text-align: center;
             line-height: 1.5em;
-            display: none;
+            display: flex;
             transition: background-color 0.3s;
         }
 
             .back-to-top:hover {
                 background-color: #ff704d;
             }
-
+        
         #modal {
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            animation: modalBgFadeIn 0.1s ease forwards;
+        position: fixed;
+        z-index: 1000;
+        left: 0; top: 0;
+        width: 100%; height: 100%;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        animation: modalBgFadeIn 0.1s ease forwards;
         }
-
-            #modal.fade-out {
-                animation: modalBgFadeOut 0.1s ease forwards;
-            }
-
-        .close {
-            position: absolute;
-            top: 1em;
-            right: 1em;
-            font-size: 1.5em;
-            cursor: pointer;
+        #modal.fade-out {
+            animation: modalBgFadeOut 0.1s ease forwards;
         }
 
         @keyframes modalFadeIn {
@@ -293,103 +299,29 @@
                 opacity: 0;
                 transform: scale(0.8);
             }
-
             100% {
                 opacity: 1;
                 transform: scale(1);
             }
         }
-
         @keyframes modalFadeOut {
             0% {
                 opacity: 1;
                 transform: scale(1);
             }
-
             100% {
                 opacity: 0;
                 transform: scale(0.8);
             }
         }
-
         @keyframes modalBgFadeIn {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
-
         @keyframes modalBgFadeOut {
-            from {
-                opacity: 1;
-            }
-
-            to {
-                opacity: 0;
-            }
+            from { opacity: 1; }
+            to { opacity: 0; }
         }
-        .carousel-container {
-            position: relative;
-            max-width: 500px;
-            margin: 0 auto;
-            overflow: hidden;
-            border-radius: 10px;
-        }
-
-        .carousel-slide {
-            display: flex;
-            transition: transform 0.5s ease-in-out;
-            width: 400%;
-        }
-
-            .carousel-slide img {
-                width: 100%;
-                flex-shrink: 0;
-                border-radius: 10px;
-            }
-
-        .carousel-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: rgba(255, 153, 102, 0.8);
-            border: none;
-            color: white;
-            font-size: 2em;
-            padding: 0 10px;
-            cursor: pointer;
-            z-index: 10;
-        }
-
-        .prev {
-            left: 10px;
-        }
-
-        .next {
-            right: 10px;
-        }
-
-        .dots {
-            text-align: center;
-            margin-top: 10px;
-        }
-
-            .dots span {
-                display: inline-block;
-                height: 12px;
-                width: 12px;
-                margin: 0 5px;
-                background-color: #bbb;
-                border-radius: 50%;
-                cursor: pointer;
-            }
-
-            .dots .active {
-                background-color: #ff9966;
-            }
     </style>
 </head>
 <body>
@@ -397,7 +329,10 @@
 
     <header>
         <nav>
-            <h1>宜親木盒便當</h1>
+            <div class="name-status-wrapper">
+                <h1>宜親木盒便當</h1>
+                <div class="open-status" id="headerOpenStatus"></div>
+            </div>
             <div class="nav-links">
                 <ul>
                     <li><a href="javascript:void(0)" id="announcementLink">公告</a></li>
@@ -406,48 +341,60 @@
                 </ul>
             </div>
         </nav>
-
-
+        
+        
     </header>
 
     <div class="container">
-        <section class="section glass news" id="news">
-            <h2>最新消息</h2>
-            <div id="messages"></div>
-            <button class="btn" id="showMore">查看更多</button>
-        </section>
-
-        <section class="section glass about" id="about">
-            <h2>關於我們</h2>
-            <p>
-                宜親木盒便當誕生於對烹飪與經營的熱情。我們深信，每一份餐點不僅是食物，更是一種關懷與分享的象徵。我們的理念源自於希望為顧客提供一份健康、美味且充滿溫度的便當，讓您在忙碌的生活中也能感受到家的味道。
-
-            </p>
-            <a href="AboutME.html" class="btn">查看更多</a>
-        </section>
-
+        
         <section class="section glass menu" id="menu">
             <h2>招牌菜單</h2>
-            <div class="carousel-container">
-                <div class="carousel-slide" id="carouselSlide">
-                    <img src="img/chicken_leg_meal.jpg" alt="雞腿飯">
-                    <img src="images/braised_pork_meal.jpg" alt="滷肉飯">
-                    <img src="images/fried_pork_meal.jpg" alt="炸豬排飯">
-                    <img src="images/fried_fish_meal.jpg" alt="炸魚飯">
-                </div>
-                <button class="carousel-btn prev" id="prevBtn">&#10094;</button>
-                <button class="carousel-btn next" id="nextBtn">&#10095;</button>
-                <div class="dots" id="dots"></div>
+            <div class="menu">
+                <section class="section menu-item" id="menu-item">
+                    <div class="item">
+                        <img src="img/chicken_leg_meal.jpg" alt="雞腿飯">
+                        <h3>雞腿飯</h3>
+                    </div>
+                    <div class="item">
+                        <img src="images/braised_pork_meal.jpg" alt="滷肉飯">
+                        <h3>滷肉飯</h3>
+                    </div>
+                    <div class="item">
+                        <img src="images/fried_pork_meal.jpg" alt="炸豬排飯">
+                        <h3>炸豬排飯</h3>
+                    </div>
+                    <div class="item">
+                        <img src="images/fried_fish_meal.jpg" alt="炸魚飯">
+                        <h3>炸魚飯</h3>
+                    </div>
+                
             </div>
             <a href="menu.html" class="btn">查看更多</a>
         </section>
 
-       
+        <div class="news-about-wrapper">
+            <section class="section glass news" id="news">
+                <h2>最新消息</h2>
+                <div id="messages"></div>
+                <button class="btn" id="showMore">查看更多</button>
+            </section>
+    
+            <section class="section glass about" id="about">
+                <h2>關於我們</h2>
+                <p>
+                    宜親木盒便當誕生於對烹飪與經營的熱情。我們深信，每一份餐點不僅是食物，更是一種關懷與分享的象徵。我們的理念源自於希望為顧客提供一份健康、美味且充滿溫度的便當，讓您在忙碌的生活中也能感受到家的味道。
+                    
+                </p>
+                <a href="AboutME.html" class="btn">查看更多</a>
+            </section>
+        </div>
 
         <section class="section glass contact" id="contact">
             <h2>聯絡我們</h2>
+            <div class="open-status" id="contactOpenStatus"></div>
             <p>電話訂餐：038-662-120</p>
             <p>地址：974花蓮縣壽豐鄉花35鄉道107號</p>
+            <p>營業時間：周一～周六 10:00 ~ 14:00, 16:00 ~ 21:00, 周日休息</p>
             <div style="margin-top: 1em;">
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3647.5350513004437!2d121.52987457584979!3d23.906100478564557!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3468a3e0c334901f%3A0x1e98f178faf3c51!2zOTc06Iqx6JOu57ij5aO96LGQ6YSJ6IqxMzXphInpgZMxMDfomZ8!5e0!3m2!1szh-TW!2stw!4v1746235157091!5m2!1szh-TW!2stw"
                         width="100%"
@@ -470,7 +417,7 @@
     </div>
 
     <footer>
-        <p>&copy; 2025 宜親木盒便當</p>
+        <p>&copy; 2025 宜親木盒便當　｜　地址：花蓮縣壽豐鄉中正路106號　｜　訂餐電話：03-8662120</p>
     </footer>
 
     <a href="#top" class="back-to-top" id="backToTop">↑</a>
@@ -502,10 +449,10 @@
                     const div = document.createElement('div');
                     div.classList.add('message');
                     div.innerHTML = `
-                            <h3>${latestIssue.title}</h3>
-                            <p>${latestIssue.body}</p>
-                            <div class="date">發布日期：${formatDate(latestIssue.created_at)}</div>
-                        `;
+                        <h3>${latestIssue.title}</h3>
+                        <p>${latestIssue.body}</p>
+                        <div class="date">發布日期：${formatDate(latestIssue.created_at)}</div>
+                    `;
                     messages.appendChild(div);
                 }
             })
@@ -513,7 +460,7 @@
                 console.error('無法載入推播消息:', error);
             });
 
-
+        
         showMoreBtn.addEventListener('click', () => {
             modalMessages.innerHTML = ''; // 清空 modal 中內容
 
@@ -525,10 +472,10 @@
                         const div = document.createElement('div');
                         div.classList.add('message');
                         div.innerHTML = `
-                                <h3>${issue.title}</h3>
-                                <p>${issue.body}</p>
-                                <div class="date">發布日期：${formatDate(issue.created_at)}</div>
-                            `;
+                            <h3>${issue.title}</h3>
+                            <p>${issue.body}</p>
+                            <div class="date">發布日期：${formatDate(issue.created_at)}</div>
+                        `;
                         modalMessages.appendChild(div);
                     });
                     modal.style.display = 'flex';
@@ -561,81 +508,64 @@
             }
         });
 
-        announcementLink.addEventListener('click', () => {
-            modalMessages.innerHTML = ''; // 清空 modal 中內容
+    announcementLink.addEventListener('click', () => {
+        modalMessages.innerHTML = ''; // 清空 modal 中內容
 
-            fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/issues`)
-                .then(response => response.json())
-                .then(issues => {
-                    const validIssues = issues.filter(issue => targetUsers.includes(issue.user.login));
-                    validIssues.forEach(issue => {
-                        const div = document.createElement('div');
-                        div.classList.add('message');
-                        div.innerHTML = `
-                            <h3>${issue.title}</h3>
-                            <p>${issue.body}</p>
-                            <div class="date">發布日期：${formatDate(issue.created_at)}</div>
-                        `;
-                        modalMessages.appendChild(div);
-                    });
-                    modal.style.display = 'flex';
+        fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/issues`)
+            .then(response => response.json())
+            .then(issues => {
+                const validIssues = issues.filter(issue => targetUsers.includes(issue.user.login));
+                validIssues.forEach(issue => {
+                    const div = document.createElement('div');
+                    div.classList.add('message');
+                    div.innerHTML = `
+                        <h3>${issue.title}</h3>
+                        <p>${issue.body}</p>
+                        <div class="date">發布日期：${formatDate(issue.created_at)}</div>
+                    `;
+                    modalMessages.appendChild(div);
                 });
-        });
-        const carouselSlide = document.getElementById('carouselSlide');
-        const images = carouselSlide.querySelectorAll('img');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const dotsContainer = document.getElementById('dots');
-
-        let counter = 0;
-        let slideInterval;
-
-        function showSlide(index) {
-            if (index < 0) counter = images.length - 1;
-            else if (index >= images.length) counter = 0;
-            else counter = index;
-            carouselSlide.style.transform = `translateX(-${counter * 100}%)`;
-            updateDots();
-        }
-
-        function updateDots() {
-            dotsContainer.querySelectorAll('span').forEach((dot, idx) => {
-                dot.classList.toggle('active', idx === counter);
+                modal.style.display = 'flex';
             });
+    });
+
+    /*營業狀態*/
+    function updateOpenStatus() {
+        const now = new Date();
+        const day = now.getDay(); // 0（日）～6（六）
+        const hour = now.getHours();
+        const min = now.getMinutes();
+        const totalMinutes = hour * 60 + min;
+
+        // 營業時間：週一～週五，10:30～19:30
+        const openMinutes = 10 * 60 + 30;
+        const closeMinutes = 19 * 60 + 30;
+
+        const isOpenDay = day >= 1 && day <= 6;
+        const isOpenTime = (totalMinutes >= 600 && totalMinutes < 840) || 
+        (totalMinutes >= 960 && totalMinutes < 1260);
+
+        const headerStatus = document.getElementById('headerOpenStatus');
+        const contactStatus = document.getElementById('contactOpenStatus');
+
+        // 根據營業狀態設置文字和顏色
+        const statusText = isOpenDay && isOpenTime ? '🟢 營業中' : '🔴 休息中';
+        const statusColor = isOpenDay && isOpenTime ? 'green' : 'red';
+
+        // 設置header和聯絡我們部分的狀態
+        if (headerStatus) {
+            headerStatus.textContent = statusText;
+            headerStatus.style.color = statusColor;
         }
 
-        images.forEach((_, i) => {
-            const dot = document.createElement('span');
-            dot.addEventListener('click', () => {
-                showSlide(i);
-                resetInterval();
-            });
-            dotsContainer.appendChild(dot);
-        });
-
-        prevBtn.addEventListener('click', () => {
-            showSlide(counter - 1);
-            resetInterval();
-        });
-
-        nextBtn.addEventListener('click', () => {
-            showSlide(counter + 1);
-            resetInterval();
-        });
-
-        function startAutoSlide() {
-            slideInterval = setInterval(() => {
-                showSlide(counter + 1);
-            }, 4000);
+        if (contactStatus) {
+            contactStatus.textContent = statusText;
+            contactStatus.style.color = statusColor;
         }
+    }
 
-        function resetInterval() {
-            clearInterval(slideInterval);
-            startAutoSlide();
-        }
-
-        showSlide(0);
-        startAutoSlide();
+        updateOpenStatus();
+        setInterval(updateOpenStatus, 60000);
     </script>
 </body>
 </html>
