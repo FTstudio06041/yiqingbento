@@ -322,6 +322,68 @@
             from { opacity: 1; }
             to { opacity: 0; }
         }
+        
+        .carousel-container {
+            position: relative;
+            max-width: 500px;
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .carousel-slide {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            max-height: 300px;
+            max-width: 300px;
+            object-fit: cover;
+            flex-shrink: 0;
+            border-radius: 10px;
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 153, 102, 0.8);
+            border: none;
+            color: white;
+            font-size: 2em;
+            padding: 0 10px;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .prev {
+            left: 10px;
+        }
+
+        .next {
+            right: 10px;
+        }
+
+        .dots {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+            .dots span {
+                display: inline-block;
+                height: 12px;
+                width: 12px;
+                margin: 0 5px;
+                background-color: #bbb;
+                border-radius: 50%;
+                cursor: pointer;
+            }
+
+            .dots .active {
+                background-color: #ff9966;
+            }
     </style>
 </head>
 <body>
@@ -349,25 +411,16 @@
         
         <section class="section glass menu" id="menu">
             <h2>招牌菜單</h2>
-            <div class="menu">
-                <section class="section menu-item" id="menu-item">
-                    <div class="item">
-                        <img src="img/chicken_leg_meal.jpg" alt="雞腿飯">
-                        <h3>雞腿飯</h3>
-                    </div>
-                    <div class="item">
-                        <img src="images/braised_pork_meal.jpg" alt="滷肉飯">
-                        <h3>滷肉飯</h3>
-                    </div>
-                    <div class="item">
-                        <img src="images/fried_pork_meal.jpg" alt="炸豬排飯">
-                        <h3>炸豬排飯</h3>
-                    </div>
-                    <div class="item">
-                        <img src="images/fried_fish_meal.jpg" alt="炸魚飯">
-                        <h3>炸魚飯</h3>
-                    </div>
-                
+            <div class="carousel-container">
+                <div class="carousel-slide" id="carouselSlide">
+                    <img src="img/chicken_leg_meal.png" alt="雞腿飯">
+                    <img src="img/braised_pork_meal.png" alt="滷肉飯">
+                    <img src="img/fried_pork_meal.png" alt="炸豬排飯">
+                    <img src="img/fried_fish_meal.png" alt="炸魚飯">
+                </div>
+                <button class="carousel-btn prev" id="prevBtn">&#10094;</button>
+                <button class="carousel-btn next" id="nextBtn">&#10095;</button>
+                <div class="dots" id="dots"></div>
             </div>
             <a href="menu.html" class="btn">查看更多</a>
         </section>
@@ -564,8 +617,49 @@
         }
     }
 
-        updateOpenStatus();
-        setInterval(updateOpenStatus, 60000);
+    const carouselSlide = document.getElementById('carouselSlide');
+    const images = carouselSlide.querySelectorAll('img');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const dotsContainer = document.getElementById('dots');
+
+    let currentIndex = 0;
+
+    function updateCarousel() {
+        const width = carouselSlide.clientWidth;
+        carouselSlide.style.transform = `translateX(-${currentIndex * 100}%)`;
+
+        // 更新 dots 狀態
+        dotsContainer.querySelectorAll('span').forEach((dot, i) => {
+            dot.classList.toggle('active', i === currentIndex);
+        });
+    }
+
+    // 建立圓點指示器
+    images.forEach((_, index) => {
+        const dot = document.createElement('span');
+        if (index === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => {
+            currentIndex = index;
+            updateCarousel();
+        });
+        dotsContainer.appendChild(dot);
+    });
+
+    prevBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        updateCarousel();
+    });
+
+    nextBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % images.length;
+        updateCarousel();
+    });
+
+    // 初始更新
+    updateOpenStatus();
+    setInterval(updateOpenStatus, 60000);
+    updateCarousel();
     </script>
 </body>
 </html>
