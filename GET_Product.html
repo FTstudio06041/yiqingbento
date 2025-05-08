@@ -67,7 +67,7 @@
     <p id="productDescription"></p>
     <p id="errorMsg" class="error"></p>
     <div class="back-button">
-      <a id="backLink" href="index.html">
+      <a id="backLink" href="#">
         <button class="styled-button">⬅ 回到菜單首頁</button>
       </a>
     </div>
@@ -103,7 +103,7 @@
         imageEl.src = 'img/default.png';
       };
 
-      document.getElementById('backLink').href = 'menu1.html';
+      document.getElementById('backLink').href = 'menu.html';
     } else {
       document.getElementById('productName').textContent = '找不到此商品';
       document.getElementById('errorMsg').textContent = '商品編號錯誤或不存在';
