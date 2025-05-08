@@ -325,10 +325,11 @@
         
         .carousel-container {
             position: relative;
-            max-width: 500px;
+            max-width: 600px;
             margin: 0 auto;
             overflow: hidden;
             border-radius: 10px;
+            justify-content: center;
         }
 
         .carousel-slide {
@@ -336,13 +337,32 @@
             transition: transform 0.5s ease-in-out;
         }
 
-        .carousel-slide img {
+        .carousel-item {
+            min-width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .carousel-card {
+            background: hsla(39, 100%, 50%, 0.7);
+            border-radius: 5px;
+            padding: 15px;
+            backdrop-filter: blur(10px);      
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            justify-content: space-between;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .carousel-item img {
             width: 100%;
             max-height: 300px;
             max-width: 300px;
-            object-fit: cover;
-            flex-shrink: 0;
             border-radius: 10px;
+            margin-bottom: 10px;
         }
 
         .carousel-btn {
@@ -413,10 +433,32 @@
             <h2>招牌菜單</h2>
             <div class="carousel-container">
                 <div class="carousel-slide" id="carouselSlide">
-                    <img src="img/chicken_leg_meal.png" alt="雞腿飯">
-                    <img src="img/braised_pork_meal.png" alt="滷肉飯">
-                    <img src="img/fried_pork_meal.png" alt="炸豬排飯">
-                    <img src="img/fried_fish_meal.png" alt="炸魚飯">
+                    <div class="carousel-item">
+                        <div class="carousel-card">
+                            <img src="img/chicken_leg_meal.png" alt="雞腿飯">
+                            <div class="card-content">
+                                <h3>雞腿飯</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="carousel-card">
+                            <img src="img/braised_pork_meal.png" alt="滷肉飯">
+                            <h3>滷肉飯</h3>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="carousel-card">
+                            <img src="img/fried_pork_meal.png" alt="炸豬排飯">
+                            <h3>炸豬排飯</h3>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="carousel-card">
+                            <img src="img/fried_fish_meal.png" alt="炸魚飯">
+                            <h3>炸魚飯</h3>
+                        </div>
+                    </div>
                 </div>
                 <button class="carousel-btn prev" id="prevBtn">&#10094;</button>
                 <button class="carousel-btn next" id="nextBtn">&#10095;</button>
