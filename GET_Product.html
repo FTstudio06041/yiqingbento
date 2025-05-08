@@ -34,74 +34,90 @@
       color: red;
     }
     .back-button {
-    text-align: center;
-    margin-top: 30px;
-  }
-
-  .styled-button {
-    background: linear-gradient(135deg, #6a11cb, #2575fc);
-    border: none;
-    color: white;
-    font-size: 18px;
-    font-weight: 600;
-    padding: 12px 28px;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  }
-
-  .styled-button:hover {
-    background: linear-gradient(135deg, #5a0eb4, #1e63e5);
-    transform: scale(1.04);
-  }
-
-  .styled-button:active {
-    transform: scale(0.98);
-  }
+      text-align: center;
+      margin-top: 30px;
+    }
+    .styled-button {
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      border: none;
+      color: white;
+      font-size: 18px;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    .styled-button:hover {
+      background: linear-gradient(135deg, #5a0eb4, #1e63e5);
+      transform: scale(1.04);
+    }
+    .styled-button:active {
+      transform: scale(0.98);
+    }
   </style>
 </head>
 <body>
   <div class="product-box">
-  <img id="productImage" src="" alt="商品圖片"
-     onerror="this.src='img/default.png'; this.classList.add('error-image');">
-
+    <img id="productImage" src="" alt="商品圖片">
     <h1 id="productName">載入中...</h1>
     <p id="productEnglishName"></p>
     <p id="productPrice" class="price"></p>
     <p id="productDescription"></p>
     <p id="errorMsg" class="error"></p>
-     <div class="back-button">
-  <a id="backLink" href="#">
-    <button class="styled-button">⬅ 回到前頁</button>
-  </a>
-</div>
+    <div class="back-button">
+      <a id="backLink" href="#">
+        <button class="styled-button">⬅ 回到菜單首頁</button>
+      </a>
+    </div>
   </div>
 
-<script>
-  const urlParams = new URLSearchParams(window.location.search);
-  const productId = urlParams.get('id');
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get('id');
 
-  fetch('Products.json')
-    .then(res => res.json())
-    .then(data => {
-      const product = data.products.find(p => p.id === productId);
-      if (product) {
-        document.getElementById('productName').textContent = product.name;
-        document.getElementById('productEnglishName').textContent = product.englishName || '';
-        document.getElementById('productPrice').textContent = `售價：NT$ ${product.price}`;
-        document.getElementById('productDescription').textContent = product.description || '';
-        document.getElementById('productImage').src = `img/${product.id}.png`;
+    async function loadProduct() {
+  try {
+    let data;
+    if (localStorage.getItem('productsCache')) {
+      data = JSON.parse(localStorage.getItem('productsCache'));
+    } else {
+      const res = await fetch('Products.json');
+      data = await res.json();
+      localStorage.setItem('productsCache', JSON.stringify(data));
+    }
 
-        // ✅ 根據 id 設定返回按鈕連結
-        const backLink = document.getElementById('backLink');
-        backLink.href ='menu1.html';
-    .catch(error => {
-      console.error('載入失敗：', error);
-      document.getElementById('productName').textContent = '發生錯誤';
-      document.getElementById('errorMsg').textContent = '無法載入商品資訊';
-    });
-</script>
+    const product = data.products.find(p => String(p.id) === String(productId));
 
+    if (product) {
+      document.getElementById('productName').textContent = product.name;
+      document.getElementById('productEnglishName').textContent = product.englishName || '';
+      document.getElementById('productPrice').textContent = `售價：NT$ ${product.price}`;
+      document.getElementById('productDescription').textContent = product.description || '';
+
+      const imageEl = document.getElementById('productImage');
+      imageEl.src = `img/${product.id}.png`;
+      imageEl.onerror = () => {
+        console.warn(`圖片載入失敗：img/${product.id}.png`);
+        imageEl.src = 'img/default.png';
+      };
+
+      document.getElementById('backLink').href = 'index.html';
+    } else {
+      document.getElementById('productName').textContent = '找不到此商品';
+      document.getElementById('errorMsg').textContent = '商品編號錯誤或不存在';
+      document.getElementById('productImage').style.display = 'none';
+    }
+  } catch (error) {
+    console.error('載入失敗：', error);
+    document.getElementById('productName').textContent = '發生錯誤';
+    document.getElementById('errorMsg').textContent = '⚠ 無法載入商品資訊，請稍後再試';
+  }
+}
+
+
+    loadProduct();
+  </script>
 </body>
 </html>
