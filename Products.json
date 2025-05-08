@@ -1,0 +1,31 @@
+{
+  "products": [
+    { "id": "1", "name": "牛肉河粉", "englishName": "Beef rice noodles", "price": 100, "description": "鮮嫩牛肉搭配清爽湯頭" },
+    { "id": "2", "name": "豬肉河粉", "englishName": "Pork rice noodles", "price": 80, "description": "經典豬肉風味，濃郁可口" },
+    { "id": "3", "name": "豬排骨河粉", "englishName": "Pork ribs rice noodles", "price": 90, "description": "香嫩排骨搭配滑順河粉" },
+    { "id": "4", "name": "雞肉河粉", "englishName": "Chicken rice noodles", "price": 90, "description": "軟嫩雞肉，湯頭甘甜" },
+    { "id": "5", "name": "乾河粉", "englishName": "Rice noodles without soup", "price": 80, "description": "無湯版河粉，清爽不膩" },
+    { "id": "6", "name": "海鮮河粉", "englishName": "Seafood rice noodles", "price": 100, "description": "多種海鮮配料，鮮味十足" },
+    { "id": "7", "name": "餛飩河粉", "englishName": "Wonton rice noodles", "price": 80, "description": "手工餛飩，口感扎實滑順" },
+    { "id": "8", "name": "素食乾河粉", "englishName": "Vegetarian rice noodles without soup", "price": 80, "description": "蔬食清爽，口味自然健康" },
+    { "id": "9", "name": "台灣乾麵", "englishName": "Noodles without soup", "price": 70, "description": "台式乾麵，香氣撲鼻" },
+    { "id": "10", "name": "越南乾麵", "englishName": "Vietnamese noodles without soup", "price": 70, "description": "越式風味，酸甜開胃" },
+    { "id": "11", "name": "炸春捲涼拌米線", "englishName": "Cold rice thread noodles with fried spring rolls", "price": 100, "description": "酥脆春捲搭配清涼米線" },
+    { "id": "12", "name": "牛肉冬粉", "englishName": "Beef clear noodles", "price": 100, "description": "清湯冬粉搭配厚切牛肉" },
+    { "id": "13", "name": "豬肉冬粉", "englishName": "Pork clear noodles", "price": 80, "description": "輕盈湯頭與嫩豬肉完美融合" },
+    { "id": "14", "name": "豬排骨冬粉", "englishName": "Pork ribs clear noodles", "price": 90, "description": "排骨湯鮮香，冬粉滑順" },
+    { "id": "15", "name": "雞肉冬粉", "englishName": "Chicken clear noodles", "price": 90, "description": "雞湯濃郁，搭配爽口冬粉" },
+    { "id": "16", "name": "海鮮冬粉", "englishName": "Seafood clear noodles", "price": 100, "description": "新鮮海味，湯頭鮮甜順口" },
+    { "id": "17", "name": "一個炸春捲", "englishName": "One fried spring rolls", "price": 30, "description": "外酥內嫩的小巧點心" },
+    { "id": "18", "name": "兩個炸春捲", "englishName": "Two fried spring rolls", "price": 50, "description": "外酥內嫩的小巧點心" },
+    { "id": "19", "name": "一個炸蝦", "englishName": "One fried Shrimp", "price": 40, "description": "外酥內嫩的小巧點心" },
+    { "id": "20", "name": "兩個炸蝦", "englishName": "Two fried Shrimp", "price": 70, "description": "外酥內嫩的小巧點心" },
+    { "id": "21","name": "經濟飯包","englishName": "Budget Bento","price": 60,"description": "經濟實惠的簡餐選擇"},
+    { "id": "22","name": "招牌飯包","englishName": "Signature Bento","price": 80,"description": "人氣首選的豐富飯包"},
+    { "id": "23","name": "排骨飯包","englishName": "Pork Chop Bento","price": 80,"description": "酥炸排骨配經典配菜"},
+    { "id": "24","name": "控肉飯包","englishName": "Braised Pork Bento","price": 85,"description": "每位控肉，肥肉控的最愛"},
+    { "id": "25","name": "魚排飯包","englishName": "Fish Fillet Bento","price": 80,"description": "酥炸魚排酥脆鮮嫩"},
+    { "id": "26","name": "雞腿飯包","englishName": "Chicken Leg Bento","price": 90,"description": "大塊雞腿，香嫩多汁"},
+    { "id": "27","name": "素食飯包","englishName": "Vegetarian Bento","price": 80,"description": "無肉料理，清爽健康"}
+  ]
+}

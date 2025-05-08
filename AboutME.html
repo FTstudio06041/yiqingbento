@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>關於我們 | 宜親木盒便當</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Arial', sans-serif;
+      background-color: #f9f9f9;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    header img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+    }
+
+    h1 {
+      text-align: center;
+      margin: 1em 0 0.5em;
+      color: #4b2e2e;
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      border-bottom: 2px solid #eee;
+    }
+
+    nav button {
+      padding: 1em;
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background-color 0.3s;
+    }
+
+    nav button:hover,
+    nav button.active {
+      background-color: #ffe8a3;
+    }
+
+    .main {
+      flex: 1; /* 保證 main 占滿可用高度 */
+      max-width: 800px;
+      margin: 2em auto;
+      padding: 0 1em;
+      line-height: 1.8;
+      color: #333;
+    }
+
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    footer {
+      background-color: #4b2e2e;
+      color: #fff;
+      text-align: center;
+      padding: 1em 0;
+      font-size: 0.95em;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 店家圖片 -->
+  <header>
+    <img src="店家圖片連結.jpg" alt="宜親木盒便當">
+  </header>
+
+  <h1>關於我們</h1>
+
+  <nav>
+    <button class="tab active" data-target="story">開店故事</button>
+    <button class="tab" data-target="challenge">開店初期的挑戰</button>
+    <button class="tab" data-target="feeling">我們希望帶給客人的感覺</button>
+    <button class="tab" data-target="idea">品牌理念</button>
+    <button class="tab" data-target="customers">主要客群</button>
+    <button class="tab" data-target="features">我們的特色</button>
+  </nav>
+
+  <div class="main">
+    <div id="story" class="section active">
+      <p>因為我熱愛烹飪又有經營的熱情，所以決定再開一家賣越南河粉和便當的小店。我希望不只是帶來好吃的餐點，也能把經營所得的一部分用來做慈善，分享愛心給有困難的人。</p>
+    </div>
+    <div id="challenge" class="section">
+      <p>開店時最大的困難是缺乏經營經驗。因為同時經營多家店，所以在人力、食材、財務管理上都要精打細算。我也花了不少時間調整口味，聽取客人意見，讓料理更符合台灣人的口味。</p>
+    </div>
+    <div id="feeling" class="section">
+      <p>我希望客人來到店裡能感受到舒服與溫暖，吃一頓簡單卻用心準備的飯。不需要太複雜，只要好吃、乾淨、價格合理，我就很滿足了。</p>
+    </div>
+    <div id="idea" class="section">
+      <p><strong>「用心煮飯，真誠服務。」</strong> 每一道菜都像是煮給家人吃的一樣用心準備，這就是我們最重要的原則。</p>
+    </div>
+    <div id="customers" class="section">
+      <p>我們的客人主要來自壽豐地區的學生、上班族和家庭。只要是需要一餐快速、乾淨、價格合理的人，都是我們的服務對象。</p>
+    </div>
+    <div id="features" class="section">
+      <ul>
+        <li>三大類便當：肉類、魚類、素食</li>
+        <li>招牌菜：雞腿飯 🍗、滷肉飯、炸豬排飯、炸魚飯、素食便當</li>
+        <li>接受電話訂餐，提供附近外送服務</li>
+        <li>各店（火鍋、咖哩、便當）獨立運作，菜單與價格不同</li>
+      </ul>
+    </div>
+  </div>
+
+
+  <footer>
+    地址：花蓮縣壽豐鄉中正路106號　｜　訂餐電話：03-8662120
+  </footer>
+
+  <script>
+    const tabs = document.querySelectorAll('.tab');
+    const sections = document.querySelectorAll('.section');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        sections.forEach(s => s.classList.remove('active'));
+        tab.classList.add('active');
+        const target = document.getElementById(tab.dataset.target);
+        target.classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+</html>
+
