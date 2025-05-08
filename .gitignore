@@ -1,3 +1,5 @@
 # 忽略圖片檔案
 *.png
 *.jpg
+
+.DS_Store
