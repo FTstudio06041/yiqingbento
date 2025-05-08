@@ -528,7 +528,6 @@
         const modalMessages = document.getElementById('modalMessages');
         const announcementLink = document.getElementById('announcementLink');
 
-
         function formatDate(isoString) {
             const date = new Date(isoString);
             const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
@@ -555,7 +554,6 @@
                 console.error('無法載入推播消息:', error);
             });
 
-        
         showMoreBtn.addEventListener('click', () => {
             modalMessages.innerHTML = ''; // 清空 modal 中內容
 
@@ -603,105 +601,110 @@
             }
         });
 
-    announcementLink.addEventListener('click', () => {
-        modalMessages.innerHTML = ''; // 清空 modal 中內容
+        announcementLink.addEventListener('click', () => {
+            modalMessages.innerHTML = ''; // 清空 modal 中內容
 
-        fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/issues`)
-            .then(response => response.json())
-            .then(issues => {
-                const validIssues = issues.filter(issue => targetUsers.includes(issue.user.login));
-                validIssues.forEach(issue => {
-                    const div = document.createElement('div');
-                    div.classList.add('message');
-                    div.innerHTML = `
-                        <h3>${issue.title}</h3>
-                        <p>${issue.body}</p>
-                        <div class="date">發布日期：${formatDate(issue.created_at)}</div>
-                    `;
-                    modalMessages.appendChild(div);
+            fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/issues`)
+                .then(response => response.json())
+                .then(issues => {
+                    const validIssues = issues.filter(issue => targetUsers.includes(issue.user.login));
+                    validIssues.forEach(issue => {
+                        const div = document.createElement('div');
+                        div.classList.add('message');
+                        div.innerHTML = `
+                            <h3>${issue.title}</h3>
+                            <p>${issue.body}</p>
+                            <div class="date">發布日期：${formatDate(issue.created_at)}</div>
+                        `;
+                        modalMessages.appendChild(div);
+                    });
+                    modal.style.display = 'flex';
                 });
-                modal.style.display = 'flex';
+        });
+
+        /*營業狀態*/
+        function updateOpenStatus() {
+            const now = new Date();
+            const day = now.getDay(); // 0（日）～6（六）
+            const hour = now.getHours();
+            const min = now.getMinutes();
+            const totalMinutes = hour * 60 + min;
+
+            // 營業時間：週一～週五，10:30～19:30
+            const openMinutes = 10 * 60 + 30;
+            const closeMinutes = 19 * 60 + 30;
+
+            const isOpenDay = day >= 1 && day <= 6;
+            const isOpenTime = (totalMinutes >= 600 && totalMinutes < 840) || 
+            (totalMinutes >= 960 && totalMinutes < 1260);
+
+            const headerStatus = document.getElementById('headerOpenStatus');
+            const contactStatus = document.getElementById('contactOpenStatus');
+
+            // 根據營業狀態設置文字和顏色
+            const statusText = isOpenDay && isOpenTime ? '🟢 營業中' : '🔴 休息中';
+            const statusColor = isOpenDay && isOpenTime ? 'green' : 'red';
+
+            // 設置header和聯絡我們部分的狀態
+            if (headerStatus) {
+                headerStatus.textContent = statusText;
+                headerStatus.style.color = statusColor;
+            }
+
+            if (contactStatus) {
+                contactStatus.textContent = statusText;
+                contactStatus.style.color = statusColor;
+            }
+        }
+
+        /* 輪播 */
+        const carouselSlide = document.getElementById('carouselSlide');
+        const images = carouselSlide.querySelectorAll('img');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const dotsContainer = document.getElementById('dots');
+
+        let currentIndex = 0;
+
+        function updateCarousel() {
+            carouselSlide.style.transform = `translateX(-${currentIndex * 100}%)`;
+
+            dotsContainer.querySelectorAll('span').forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentIndex);
             });
-    });
-
-    /*營業狀態*/
-    function updateOpenStatus() {
-        const now = new Date();
-        const day = now.getDay(); // 0（日）～6（六）
-        const hour = now.getHours();
-        const min = now.getMinutes();
-        const totalMinutes = hour * 60 + min;
-
-        // 營業時間：週一～週五，10:30～19:30
-        const openMinutes = 10 * 60 + 30;
-        const closeMinutes = 19 * 60 + 30;
-
-        const isOpenDay = day >= 1 && day <= 6;
-        const isOpenTime = (totalMinutes >= 600 && totalMinutes < 840) || 
-        (totalMinutes >= 960 && totalMinutes < 1260);
-
-        const headerStatus = document.getElementById('headerOpenStatus');
-        const contactStatus = document.getElementById('contactOpenStatus');
-
-        // 根據營業狀態設置文字和顏色
-        const statusText = isOpenDay && isOpenTime ? '🟢 營業中' : '🔴 休息中';
-        const statusColor = isOpenDay && isOpenTime ? 'green' : 'red';
-
-        // 設置header和聯絡我們部分的狀態
-        if (headerStatus) {
-            headerStatus.textContent = statusText;
-            headerStatus.style.color = statusColor;
         }
 
-        if (contactStatus) {
-            contactStatus.textContent = statusText;
-            contactStatus.style.color = statusColor;
-        }
-    }
-
-    const carouselSlide = document.getElementById('carouselSlide');
-    const images = carouselSlide.querySelectorAll('img');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    const dotsContainer = document.getElementById('dots');
-
-    let currentIndex = 0;
-
-    function updateCarousel() {
-        const width = carouselSlide.clientWidth;
-        carouselSlide.style.transform = `translateX(-${currentIndex * 100}%)`;
-
-        // 更新 dots 狀態
-        dotsContainer.querySelectorAll('span').forEach((dot, i) => {
-            dot.classList.toggle('active', i === currentIndex);
+        // 建立圓點指示器
+        images.forEach((_, index) => {
+            const dot = document.createElement('span');
+            if (index === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => {
+                currentIndex = index;
+                updateCarousel();
+            });
+            dotsContainer.appendChild(dot);
         });
-    }
 
-    // 建立圓點指示器
-    images.forEach((_, index) => {
-        const dot = document.createElement('span');
-        if (index === 0) dot.classList.add('active');
-        dot.addEventListener('click', () => {
-            currentIndex = index;
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % images.length;
             updateCarousel();
-        });
-        dotsContainer.appendChild(dot);
-    });
+        }
 
-    prevBtn.addEventListener('click', () => {
-        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        function prevSlide() {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            updateCarousel();
+        }
+
+        prevBtn.addEventListener('click', prevSlide);
+        nextBtn.addEventListener('click', nextSlide);
+
+        // 啟動初始與輪播
         updateCarousel();
-    });
+        setInterval(nextSlide, 5000); // 每 5 秒輪播一次
 
-    nextBtn.addEventListener('click', () => {
-        currentIndex = (currentIndex + 1) % images.length;
-        updateCarousel();
-    });
-
-    // 初始更新
-    updateOpenStatus();
-    setInterval(updateOpenStatus, 5000); // 5秒輪播
-    updateCarousel();
+        // 設定營業狀態檢查
+        updateOpenStatus();
+        setInterval(updateOpenStatus, 60000);
     </script>
 </body>
 </html>
