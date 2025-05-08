@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>關於我們 | 宜親木盒便當</title>
-  <link rel="stylesheet" href="style.css" />
-  <style>
-    body {
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>宜親木盒便當</title>
+    <style>
+        body {
             font-family: "Noto Sans TC", "Helvetica", "Arial","LiHei Pro","黑體-繁","微軟正黑體", sans-serif;
             margin: 0;
             padding: 0;
@@ -34,127 +33,636 @@
             background: #311e00;
             z-index: -1;
         }
-header {
-  background-color: #ffffff;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
-  color: black;
-}
+        /*導覽列*/
+        header {
+            position: relative;
+            background-color: #ffffff;
+            padding: 1em 0;
+            text-align: left;
+            padding-left: 5%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
 
-.logo {
-  font-size: 1.6rem;
-  font-weight: bold;
-  letter-spacing: 1px;
-}
+        .name-status-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 5%;
+        }
 
-nav ul {
-  list-style: none;
-  display: flex;
-  gap: 1.5rem;
-  margin: 0;
-  padding: 0;
-}
+        header h1 {
+            margin: 0;
+            font-size: 2em;
+        }
 
-nav a {
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-  transition: color 0.3s;
-}
+        .open-status {
+        font-size: 16px;
+        margin-top: 5px;
+        }
 
-nav a:hover {
-  color: #fff4d1;
-}
+        nav {
+           display: flex;
+           padding: 2% 6%;
+           justify-content: space-between;
+           align-items: center; 
+        }
+        .nav-links {
+            flex: 1;
+            text-align: right;
+        }
+        .nav-links ul li {
+            list-style: none;
+            display: inline-block;
+            padding: 6px;
+            padding-right: 20%;
+            position: relative;
+        }
+        .nav-links ul li a{
+            position: relative;
+            display: inline-block;
+            color: #000000;
+            text-decoration: none;
+            font-size: 20px;
+            transition: transform 0.2s ease, color 0.2s ease;
+        }
+        .nav-links ul li a:hover{
+            color: #d98600;
+            text-decoration: none;
+            transform: scale(1.3);
+        }                       
 
-nav a.active {
-  border-bottom: 2px solid white;
-}
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1em;
+        }
 
-    .section {
-      background: #fff;
-      margin: 2em auto;
-      padding: 1.5em 2em;
-      max-width: 900px;
-      border-radius: 15px;
-      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-    }
+        /*最新消息*/
+        #messages {
+        max-width: 700px;
+        margin: 0;
+        margin-right: auto;
+        padding-left: 1em;
+        }
+        .message {
+        background: hsla(0, 0%, 0%, 0); /* 半透明白底 */
+        backdrop-filter: blur(40px);           /* 模糊效果 */
+        -webkit-backdrop-filter: blur(10px);   /* Safari 支援 */
+        border-left: 6px solid #ff9d00;
+        padding: 16px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+        .message h3 {
+        margin: 0 0 10px 0;
+        font-size: 22px;
+        color: #ff9d00;
+        }
+        .message .date {
+        font-size: 14px;
+        color: #666;
+        margin-bottom: 10px;
+        }
+        .message p {
+        margin: 0;
+        font-size: 16px;
+        white-space: pre-line;
+        }
+        #showMore {
+            outline: none;
+            border: none;
+        }
+        .modal-content {
+            position: relative;
+            width: 75vw; 
+            height: 50vh;
+            background: rgba(255, 255, 255, 0.875); 
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            padding: 2em;
+            overflow-y: auto;
+            scrollbar-width: none;
+            animation: modalFadeIn 0.1s ease-out;
+        }
+        .modal-fade-out {
+            animation: modalFadeOut 0.2s ease-out forwards;
+        }
+        .close {
+            position: fixed;
+            font-size: 1.8em;
+            top: 1em;
+            right: 1em;
+            cursor: pointer;
+            color: #333;
+            transition: transform 0.2s ease, color 0.2s ease;
+        }
+        .close:hover {
+            transform: scale(1.2);
+            color: #ff704d;
+        }
 
-    .section h2 {
-      font-size: 1.3em;
-      margin-bottom: 0.5em;
-      color: #333;
-      border-bottom: 3px solid #ff8c42;
-      display: inline-block;
-      padding-bottom: 0.2em;
-    }
+        .section {
+            margin-bottom: 2em;
+        }
 
-    .section p {
-      font-size: 1em;
-      line-height: 1.6;
-      color: #555;
-    }
+        .section h2 {
+            font-size: 1.5em;
+            border-bottom: 2px solid #ffcc99;
+            padding-bottom: 0.5em;
+        }
 
-    footer {
-      background-color: #333;
-      color: #fff;
-      text-align: center;
-      padding: 1em;
-      font-size: 0.9em;
-    }
-  </style>
+        .news-about-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 2%;
+            margin-top: 2em;
+        }
+
+        .news-about-wrapper .news,
+        .news-about-wrapper .about {
+            flex: 0.5 0.5 40%;
+            max-width: 50%;
+        }
+
+        .glass {
+            background: hsla(0, 0%, 100%, 0.8); /* 半透明白底 */
+            backdrop-filter: blur(10px);           /* 模糊效果 */
+            -webkit-backdrop-filter: blur(10px);   /* Safari 支援 */
+            border-radius: 15px;
+            padding: 2em;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .menu {
+            display: block;
+            gap: 1em;
+        }
+
+        .menu-item {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            justify-content: center;
+            gap: 1em;
+        }
+
+        .item {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1em;
+            flex: 1 1 calc(45% - 1em);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+            .item img {
+                max-width: 100%;
+                border-radius: 8px;
+            }
+
+            .item h3 {
+                margin: 0.5em 0;
+                font-size: 1.2em;
+            }
+
+        .btn {
+            display: inline-block;
+            margin: 2em auto 0;
+            padding: 0.5em 1em;
+            font-size: 1em;
+            color: #fff;
+            background-color: #ff9966;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+         .btn:hover {
+            background-color: #ff704d;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1em 0;
+        }
+
+            footer p {
+                margin: 0;
+            }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #ff9966;
+            color: #fff;
+            padding: 0.6em 1em;
+            border-radius: 20%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            text-decoration: none;
+            font-size: 1.5em;
+            text-align: center;
+            line-height: 1.5em;
+            display: flex;
+            transition: background-color 0.3s;
+        }
+
+            .back-to-top:hover {
+                background-color: #ff704d;
+            }
+        
+        #modal {
+        position: fixed;
+        z-index: 1000;
+        left: 0; top: 0;
+        width: 100%; height: 100%;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        animation: modalBgFadeIn 0.1s ease forwards;
+        }
+        #modal.fade-out {
+            animation: modalBgFadeOut 0.1s ease forwards;
+        }
+
+        @keyframes modalFadeIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        @keyframes modalFadeOut {
+            0% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+        }
+        @keyframes modalBgFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes modalBgFadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+        
+        .carousel-container {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: 10px;
+            justify-content: center;
+        }
+
+        .carousel-slide {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel-item {
+            min-width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .carousel-card {
+            background: hsla(39, 100%, 50%, 0.7);
+            border-radius: 5px;
+            padding: 15px;
+            backdrop-filter: blur(10px);      
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            justify-content: space-between;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .carousel-item img {
+            width: 100%;
+            max-height: 300px;
+            max-width: 300px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 153, 102, 0.8);
+            border: none;
+            color: white;
+            font-size: 2em;
+            padding: 0 10px;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .prev {
+            left: 10px;
+        }
+
+        .next {
+            right: 10px;
+        }
+
+        .dots {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+            .dots span {
+                display: inline-block;
+                height: 12px;
+                width: 12px;
+                margin: 0 5px;
+                background-color: #bbb;
+                border-radius: 50%;
+                cursor: pointer;
+            }
+
+            .dots .active {
+                background-color: #ff9966;
+            }
+    </style>
 </head>
 <body>
-  <!-- 背景波浪形狀 -->
-  <div class="circle"></div>
+    <div class="circle"></div>
 
- <header>
-  <div class="logo">宜親木盒便當</div>
-  <nav>
-    <ul>
-      <li><a href="index.html">首頁</a></li>
-      <li><a href="menu.html">菜單</a></li>
-      <li><a href="AboutME.html" class="active">關於我們</a></li>
-      <li><a href="contact.html">聯絡我們</a></li>
-    </ul>
-  </nav>
-</header>
+    <header>
+        <nav>
+            <div class="name-status-wrapper">
+                <h1>宜親木盒便當</h1>
+                <div class="open-status" id="headerOpenStatus"></div>
+            </div>
+            <div class="nav-links">
+                <ul>
+                    <li><a href="javascript:void(0)" id="announcementLink">公告</a></li>
+                    <li><a href="menu.html">菜單</a></li>
+                    <li><a href="AboutME.html">關於我們</a></li>
+                </ul>
+            </div>
+        </nav>
+        
+        
+    </header>
 
-  <main>
-    <section class="section">
-      <h2>開店故事</h2>
+    <div class="container">
+        
+   
+
+        
+
+        <section class="section glass contact" id="contact">
+            <h2>開店故事</h2>
       <p>本店創立於 2010 年，秉持著「用心烹飪、真誠待客」的理念，提供家常風味料理，致力於帶給每位顧客溫暖與幸福的用餐體驗。</p>
-    </section>
-
-    <section class="section">
-      <h2>開店初期的挑戰</h2>
+        </section>
+		<section class="section glass contact" id="contact">
+           <h2>開店初期的挑戰</h2>
       <p>開店初期，我們面臨資金有限、人力不足等挑戰，但憑藉著對美食的熱情與堅持，逐步建立起顧客的信任與口碑。</p>
-    </section>
-
-    <section class="section">
-      <h2>我們希望帶給客人的感覺</h2>
+        </section>
+		<section class="section glass contact" id="contact">
+           <h2>我們希望帶給客人的感覺</h2>
       <p>我們希望每位客人都能感受到家的溫暖與關懷，讓用餐不僅僅是填飽肚子，更是一種心靈的滿足。</p>
-    </section>
-
-    <section class="section">
-      <h2>品牌理念</h2>
+        </section>
+		<section class="section glass contact" id="contact">
+           <h2>品牌理念</h2>
       <p>我們相信美食不只填飽肚子，更能連結人與人之間的情感。透過每一道料理，傳遞我們對生活的熱愛與對顧客的關懷。</p>
-    </section>
-
-    <section class="section">
-      <h2>主要客群</h2>
+        </section>
+		<section class="section glass contact" id="contact">
+           <h2>主要客群</h2>
       <p>我們的主要客群包括附近的上班族、學生及家庭主婦，致力於提供快速、美味且價格合理的餐點，滿足不同顧客的需求。</p>
-    </section>
-
-    <section class="section">
+        </section>
+		<section class="section glass contact" id="contact">
       <h2>我們的特色</h2>
       <p>我們的特色在於每日新鮮食材、手工製作的料理，以及親切的服務態度，讓顧客感受到我們的用心與誠意。</p>
-    </section>
-  </main>
+        </section>
+		
+    </div>
+	
 
-  <footer>
-    <p>© 2025 宜親木盒便當 ｜ 地址：花蓮縣壽豐鄉中正路106號 ｜ 訂餐電話：03-8662120</p>
-  </footer>
+    <div id="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" id="closeModal">&times;</span>
+            <h2>所有公告</h2>
+            <div id="modalMessages"></div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 宜親木盒便當　｜　地址：花蓮縣壽豐鄉中正路106號　｜　訂餐電話：03-8662120</p>
+    </footer>
+
+    <a href="#top" class="back-to-top" id="backToTop">↑</a>
+
+    <script>
+        const backToTopButton = document.getElementById('backToTop');
+        const repoOwner = 'FTstudio06041';
+        const repoName = 'yiqingbento';
+        const targetUsers = ['Sumo0711', 'user2', 'user3'];
+        const showMoreBtn = document.getElementById('showMore');
+        const modal = document.getElementById('modal');
+        const closeModal = document.getElementById('closeModal');
+        const modalMessages = document.getElementById('modalMessages');
+        const announcementLink = document.getElementById('announcementLink');
+
+        function formatDate(isoString) {
+            const date = new Date(isoString);
+            const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+            return date.toLocaleDateString('zh-TW', options);
+        }
+
+        fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/issues`)
+            .then(response => response.json())
+            .then(issues => {
+                const validIssues = issues.filter(issue => targetUsers.includes(issue.user.login));
+                if (validIssues.length > 0) {
+                    const latestIssue = validIssues[0];
+                    const div = document.createElement('div');
+                    div.classList.add('message');
+                    div.innerHTML = `
+                        <h3>${latestIssue.title}</h3>
+                        <p>${latestIssue.body}</p>
+                        <div class="date">發布日期：${formatDate(latestIssue.created_at)}</div>
+                    `;
+                    messages.appendChild(div);
+                }
+            })
+            .catch(error => {
+                console.error('無法載入推播消息:', error);
+            });
+
+        showMoreBtn.addEventListener('click', () => {
+            modalMessages.innerHTML = ''; // 清空 modal 中內容
+
+            fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/issues`)
+                .then(response => response.json())
+                .then(issues => {
+                    const validIssues = issues.filter(issue => targetUsers.includes(issue.user.login));
+                    validIssues.forEach(issue => {
+                        const div = document.createElement('div');
+                        div.classList.add('message');
+                        div.innerHTML = `
+                            <h3>${issue.title}</h3>
+                            <p>${issue.body}</p>
+                            <div class="date">發布日期：${formatDate(issue.created_at)}</div>
+                        `;
+                        modalMessages.appendChild(div);
+                    });
+                    modal.style.display = 'flex';
+                });
+        });
+
+        closeModal.addEventListener('click', () => {
+            modal.classList.add('fade-out');
+            setTimeout(() => {
+                modal.style.display = 'none';
+                modal.classList.remove('fade-out');
+            }, 100);
+        });
+
+        window.addEventListener('click', (event) => {
+            if (event.target == modal) {
+                modal.classList.add('fade-out');
+                setTimeout(() => {
+                    modal.style.display = 'none';
+                    modal.classList.remove('fade-out');
+                }, 100);
+            }
+        });
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 200) {
+                backToTopButton.style.display = 'block';
+            } else {
+                backToTopButton.style.display = 'none';
+            }
+        });
+
+        announcementLink.addEventListener('click', () => {
+            modalMessages.innerHTML = ''; // 清空 modal 中內容
+
+            fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/issues`)
+                .then(response => response.json())
+                .then(issues => {
+                    const validIssues = issues.filter(issue => targetUsers.includes(issue.user.login));
+                    validIssues.forEach(issue => {
+                        const div = document.createElement('div');
+                        div.classList.add('message');
+                        div.innerHTML = `
+                            <h3>${issue.title}</h3>
+                            <p>${issue.body}</p>
+                            <div class="date">發布日期：${formatDate(issue.created_at)}</div>
+                        `;
+                        modalMessages.appendChild(div);
+                    });
+                    modal.style.display = 'flex';
+                });
+        });
+
+        /*營業狀態*/
+        function updateOpenStatus() {
+            const now = new Date();
+            const day = now.getDay(); // 0（日）～6（六）
+            const hour = now.getHours();
+            const min = now.getMinutes();
+            const totalMinutes = hour * 60 + min;
+
+            // 營業時間：週一～週五，10:30～19:30
+            const openMinutes = 10 * 60 + 30;
+            const closeMinutes = 19 * 60 + 30;
+
+            const isOpenDay = day >= 1 && day <= 6;
+            const isOpenTime = (totalMinutes >= 600 && totalMinutes < 840) || 
+            (totalMinutes >= 960 && totalMinutes < 1260);
+
+            const headerStatus = document.getElementById('headerOpenStatus');
+            const contactStatus = document.getElementById('contactOpenStatus');
+
+            // 根據營業狀態設置文字和顏色
+            const statusText = isOpenDay && isOpenTime ? '🟢 營業中' : '🔴 休息中';
+            const statusColor = isOpenDay && isOpenTime ? 'green' : 'red';
+
+            // 設置header和聯絡我們部分的狀態
+            if (headerStatus) {
+                headerStatus.textContent = statusText;
+                headerStatus.style.color = statusColor;
+            }
+
+            if (contactStatus) {
+                contactStatus.textContent = statusText;
+                contactStatus.style.color = statusColor;
+            }
+        }
+
+        /* 輪播 */
+        const carouselSlide = document.getElementById('carouselSlide');
+        const images = carouselSlide.querySelectorAll('img');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const dotsContainer = document.getElementById('dots');
+
+        let currentIndex = 0;
+
+        function updateCarousel() {
+            carouselSlide.style.transform = `translateX(-${currentIndex * 100}%)`;
+
+            dotsContainer.querySelectorAll('span').forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentIndex);
+            });
+        }
+
+        // 建立圓點指示器
+        images.forEach((_, index) => {
+            const dot = document.createElement('span');
+            if (index === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => {
+                currentIndex = index;
+                updateCarousel();
+            });
+            dotsContainer.appendChild(dot);
+        });
+
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % images.length;
+            updateCarousel();
+        }
+
+        function prevSlide() {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            updateCarousel();
+        }
+
+        prevBtn.addEventListener('click', prevSlide);
+        nextBtn.addEventListener('click', nextSlide);
+
+        // 啟動初始與輪播
+        updateCarousel();
+        setInterval(nextSlide, 5000); // 每 5 秒輪播一次
+
+        // 設定營業狀態檢查
+        updateOpenStatus();
+        setInterval(updateOpenStatus, 60000);
+    </script>
 </body>
 </html>
