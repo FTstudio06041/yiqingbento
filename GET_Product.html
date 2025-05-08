@@ -78,39 +78,30 @@
 </div>
   </div>
 
-  <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    const productId = urlParams.get('id');
+<script>
+  const urlParams = new URLSearchParams(window.location.search);
+  const productId = urlParams.get('id');
 
-    fetch('Products.json')
-      .then(res => res.json())
-      .then(data => {
-        const product = data.products.find(p => p.id === productId);
-        if (product) {
-          document.getElementById('productName').textContent = product.name;
-          document.getElementById('productEnglishName').textContent = product.englishName || '';
-          document.getElementById('productPrice').textContent = `售價：NT$ ${product.price}`;
-          document.getElementById('productDescription').textContent = product.description || '';
-          document.getElementById('productImage').src = `img/${product.id}.png`;
+  fetch('Products.json')
+    .then(res => res.json())
+    .then(data => {
+      const product = data.products.find(p => p.id === productId);
+      if (product) {
+        document.getElementById('productName').textContent = product.name;
+        document.getElementById('productEnglishName').textContent = product.englishName || '';
+        document.getElementById('productPrice').textContent = `售價：NT$ ${product.price}`;
+        document.getElementById('productDescription').textContent = product.description || '';
+        document.getElementById('productImage').src = `img/${product.id}.png`;
 
-        } else {
-          document.getElementById('productName').textContent = '找不到此商品';
-          document.getElementById('errorMsg').textContent = '商品編號錯誤或不存在';
-          document.getElementById('productImage').style.display = 'none';
-        }
-      })
-      .catch(error => {
-        console.error('載入失敗：', error);
-        document.getElementById('productName').textContent = '發生錯誤';
-        document.getElementById('errorMsg').textContent = '無法載入商品資訊';
-      });
-    
-      const backLink = document.getElementById('backLink');
-      if (parseInt(productId) >= 18) {
-        backLink.href = 'menu2.html';
-        } else {
-        backLink.href = 'menu1.html';
-}
-  </script>
+        // ✅ 根據 id 設定返回按鈕連結
+        const backLink = document.getElementById('backLink');
+        backLink.href ='menu1.html';
+    .catch(error => {
+      console.error('載入失敗：', error);
+      document.getElementById('productName').textContent = '發生錯誤';
+      document.getElementById('errorMsg').textContent = '無法載入商品資訊';
+    });
+</script>
+
 </body>
 </html>
