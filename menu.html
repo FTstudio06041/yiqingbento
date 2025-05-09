@@ -271,9 +271,11 @@
     .menu-container {
       display: flex;
       flex-wrap: wrap;
-      justify-content: flex-start;
-      gap: 20px;
+      justify-content: center; /* 讓整排置中，避免靠左貼邊 */
+      gap: 20px; /* 控制每個菜單項目的間距 */
       margin-top: 20px;
+      padding: 0 40px; /* 左右留白，可依需求調整 40px 為其他值 */
+      box-sizing: border-box;
     }
     .menu-item {
       width: 180px;
