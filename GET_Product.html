@@ -8,35 +8,50 @@
       font-family: sans-serif;
       background-color: #f7f7f7;
       padding: 20px;
-      text-align: center;
     }
+
     .product-box {
-      display: inline-block;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 30px;
       background: #fff;
       padding: 20px;
       border-radius: 10px;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      max-width: 1000px;
+      margin: auto;
     }
-    #productImage {
-      width: 300px;
+
+    .image-section img {
+      width: 100%;
+      max-width: 700px;
       border-radius: 6px;
-      margin-bottom: 15px;
     }
+
+    .text-section {
+      max-width: 500px;
+      text-align: left;
+    }
+
     h1, p {
       margin: 10px 0;
     }
+
     .price {
       font-size: 20px;
       color: #b22222;
       font-weight: bold;
     }
+
     .error {
       color: red;
     }
+
     .back-button {
-      text-align: center;
       margin-top: 30px;
     }
+
     .styled-button {
       background: linear-gradient(135deg, #6a11cb, #2575fc);
       border: none;
@@ -49,27 +64,46 @@
       transition: all 0.3s ease;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
+
     .styled-button:hover {
       background: linear-gradient(135deg, #5a0eb4, #1e63e5);
       transform: scale(1.04);
     }
+
     .styled-button:active {
       transform: scale(0.98);
+    }
+
+    @media (max-width: 768px) {
+      .product-box {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .text-section {
+        max-width: 100%;
+        text-align: center;
+      }
     }
   </style>
 </head>
 <body>
   <div class="product-box">
-    <img id="productImage" src="" alt="商品圖片">
-    <h1 id="productName">載入中...</h1>
-    <p id="productEnglishName"></p>
-    <p id="productPrice" class="price"></p>
-    <p id="productDescription"></p>
-    <p id="errorMsg" class="error"></p>
-    <div class="back-button">
-      <a id="backLink" href="#">
-        <button class="styled-button">⬅ 回到菜單首頁</button>
-      </a>
+    <div class="image-section">
+      <img id="productImage" src="" alt="商品圖片">
+    </div>
+    <div class="text-section">
+      <h1 id="productName">載入中...</h1>
+      <p id="productEnglishName"></p>
+      <p id="productPrice" class="price"></p>
+      <p id="productDescription"></p>
+      <p id="errorMsg" class="error"></p>
+      <div class="back-button">
+        <a id="backLink" href="#">
+          <button class="styled-button">⬅ 回到菜單首頁</button>
+        </a>
+      </div>
     </div>
   </div>
 
@@ -78,44 +112,43 @@
     const productId = urlParams.get('id');
 
     async function loadProduct() {
-  try {
-    let data;
-    if (localStorage.getItem('productsCache')) {
-      data = JSON.parse(localStorage.getItem('productsCache'));
-    } else {
-      const res = await fetch('Products.json');
-      data = await res.json();
-      localStorage.setItem('productsCache', JSON.stringify(data));
+      try {
+        let data;
+        if (localStorage.getItem('productsCache')) {
+          data = JSON.parse(localStorage.getItem('productsCache'));
+        } else {
+          const res = await fetch('Products.json');
+          data = await res.json();
+          localStorage.setItem('productsCache', JSON.stringify(data));
+        }
+
+        const product = data.products.find(p => String(p.id) === String(productId));
+
+        if (product) {
+          document.getElementById('productName').textContent = product.name;
+          document.getElementById('productEnglishName').textContent = product.englishName || '';
+          document.getElementById('productPrice').textContent = `售價：NT$ ${product.price}`;
+          document.getElementById('productDescription').textContent = product.description || '';
+
+          const imageEl = document.getElementById('productImage');
+          imageEl.src = `img/${product.id}.webp`;
+          imageEl.onerror = () => {
+            console.warn(`圖片載入失敗：img/${product.id}.webp`);
+            imageEl.src = 'img/default.png';
+          };
+
+          document.getElementById('backLink').href = 'menu.html';
+        } else {
+          document.getElementById('productName').textContent = '找不到此商品';
+          document.getElementById('errorMsg').textContent = '商品編號錯誤或不存在';
+          document.getElementById('productImage').style.display = 'none';
+        }
+      } catch (error) {
+        console.error('載入失敗：', error);
+        document.getElementById('productName').textContent = '發生錯誤';
+        document.getElementById('errorMsg').textContent = '⚠ 無法載入商品資訊，請稍後再試';
+      }
     }
-
-    const product = data.products.find(p => String(p.id) === String(productId));
-
-    if (product) {
-      document.getElementById('productName').textContent = product.name;
-      document.getElementById('productEnglishName').textContent = product.englishName || '';
-      document.getElementById('productPrice').textContent = `售價：NT$ ${product.price}`;
-      document.getElementById('productDescription').textContent = product.description || '';
-
-      const imageEl = document.getElementById('productImage');
-      imageEl.src = `img/${product.id}.webp`;
-      imageEl.onerror = () => {
-        console.warn(`圖片載入失敗：img/${product.id}.webp`);
-        imageEl.src = 'img/default.png';
-      };
-
-      document.getElementById('backLink').href = 'menu.html';
-    } else {
-      document.getElementById('productName').textContent = '找不到此商品';
-      document.getElementById('errorMsg').textContent = '商品編號錯誤或不存在';
-      document.getElementById('productImage').style.display = 'none';
-    }
-  } catch (error) {
-    console.error('載入失敗：', error);
-    document.getElementById('productName').textContent = '發生錯誤';
-    document.getElementById('errorMsg').textContent = '⚠ 無法載入商品資訊，請稍後再試';
-  }
-}
-
 
     loadProduct();
   </script>
