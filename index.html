@@ -62,7 +62,7 @@
 
         nav {
            display: flex;
-           padding: 2% 6%;
+           padding: 0.5em 2%;
            justify-content: space-between;
            align-items: center; 
         }
@@ -74,7 +74,7 @@
             list-style: none;
             display: inline-block;
             padding: 6px;
-            padding-right: 20%;
+            padding-right: 10%;
             position: relative;
         }
         .nav-links ul li a{
@@ -89,7 +89,13 @@
             color: #d98600;
             text-decoration: none;
             transform: scale(1.3);
-        }                       
+        }         
+        
+        .nav-links ul li a.active {
+            color: #d98600;
+            font-weight: bold;
+            border-bottom: 2px solid #d98600;
+        }
 
         .container {
             max-width: 1200px;
@@ -193,7 +199,7 @@
             backdrop-filter: blur(10px);           /* 模糊效果 */
             -webkit-backdrop-filter: blur(10px);   /* Safari 支援 */
             border-radius: 15px;
-            padding: 2em;
+            padding: 1em 2em;
             border: 1px solid rgba(255, 255, 255, 0.3);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
@@ -323,6 +329,7 @@
             to { opacity: 0; }
         }
         
+        /*菜單輪播*/
         .carousel-container {
             position: relative;
             max-width: 600px;
@@ -417,6 +424,7 @@
             </div>
             <div class="nav-links">
                 <ul>
+                    <li><a href="index.html">首頁</a></li>
                     <li><a href="javascript:void(0)" id="announcementLink">公告</a></li>
                     <li><a href="menu.html">菜單</a></li>
                     <li><a href="AboutME.html">關於我們</a></li>
@@ -435,28 +443,28 @@
                 <div class="carousel-slide" id="carouselSlide">
                     <div class="carousel-item">
                         <div class="carousel-card">
-                            <img src="img/26.webp" alt="雞腿飯包">
+                            <img src="img/chicken_leg_meal.png" alt="雞腿飯">
                             <div class="card-content">
-                                <h3>雞腿飯包</h3>
+                                <h3>雞腿飯</h3>
                             </div>
                         </div>
                     </div>
                     <div class="carousel-item">
                         <div class="carousel-card">
-                            <img src="img/25.webp" alt="魚排飯包">
-                            <h3>魚排飯包</h3>
+                            <img src="img/braised_pork_meal.png" alt="滷肉飯">
+                            <h3>滷肉飯</h3>
                         </div>
                     </div>
                     <div class="carousel-item">
                         <div class="carousel-card">
-                            <img src="img/27.webp" alt="素食飯包">
-                            <h3>素食飯包</h3>
+                            <img src="img/fried_pork_meal.png" alt="炸豬排飯">
+                            <h3>炸豬排飯</h3>
                         </div>
                     </div>
                     <div class="carousel-item">
                         <div class="carousel-card">
-                            <img src="img/1.webp" alt="牛肉河粉">
-                            <h3>牛肉河粉</h3>
+                            <img src="img/fried_fish_meal.png" alt="炸魚飯">
+                            <h3>炸魚飯</h3>
                         </div>
                     </div>
                 </div>
@@ -518,7 +526,28 @@
     <a href="#top" class="back-to-top" id="backToTop">↑</a>
 
     <script>
+        /*導覽列*/
+        const currentPage = location.pathname.split("/").pop();
+        const navLinks = document.querySelectorAll(".nav-links ul li a");
+        navLinks.forEach(link => {
+            const linkPage = link.getAttribute("href");
+
+            if (linkPage === currentPage || (linkPage === "index.html" && currentPage === "")) {
+                link.classList.add("active");
+            }
+        });
+
+        /*回到頂部*/
         const backToTopButton = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 200) {
+                backToTopButton.style.display = 'block';
+            } else {
+                backToTopButton.style.display = 'none';
+            }
+        });
+
+        /*公告*/
         const repoOwner = 'FTstudio06041';
         const repoName = 'yiqingbento';
         const targetUsers = ['Sumo0711', 'user2', 'user3'];
@@ -527,6 +556,7 @@
         const closeModal = document.getElementById('closeModal');
         const modalMessages = document.getElementById('modalMessages');
         const announcementLink = document.getElementById('announcementLink');
+
 
         function formatDate(isoString) {
             const date = new Date(isoString);
@@ -554,6 +584,7 @@
                 console.error('無法載入推播消息:', error);
             });
 
+        
         showMoreBtn.addEventListener('click', () => {
             modalMessages.innerHTML = ''; // 清空 modal 中內容
 
@@ -593,118 +624,107 @@
             }
         });
 
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 200) {
-                backToTopButton.style.display = 'block';
-            } else {
-                backToTopButton.style.display = 'none';
-            }
-        });
 
-        announcementLink.addEventListener('click', () => {
-            modalMessages.innerHTML = ''; // 清空 modal 中內容
+    announcementLink.addEventListener('click', () => {
+        modalMessages.innerHTML = ''; // 清空 modal 中內容
 
-            fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/issues`)
-                .then(response => response.json())
-                .then(issues => {
-                    const validIssues = issues.filter(issue => targetUsers.includes(issue.user.login));
-                    validIssues.forEach(issue => {
-                        const div = document.createElement('div');
-                        div.classList.add('message');
-                        div.innerHTML = `
-                            <h3>${issue.title}</h3>
-                            <p>${issue.body}</p>
-                            <div class="date">發布日期：${formatDate(issue.created_at)}</div>
-                        `;
-                        modalMessages.appendChild(div);
-                    });
-                    modal.style.display = 'flex';
+        fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/issues`)
+            .then(response => response.json())
+            .then(issues => {
+                const validIssues = issues.filter(issue => targetUsers.includes(issue.user.login));
+                validIssues.forEach(issue => {
+                    const div = document.createElement('div');
+                    div.classList.add('message');
+                    div.innerHTML = `
+                        <h3>${issue.title}</h3>
+                        <p>${issue.body}</p>
+                        <div class="date">發布日期：${formatDate(issue.created_at)}</div>
+                    `;
+                    modalMessages.appendChild(div);
                 });
-        });
-
-        /*營業狀態*/
-        function updateOpenStatus() {
-            const now = new Date();
-            const day = now.getDay(); // 0（日）～6（六）
-            const hour = now.getHours();
-            const min = now.getMinutes();
-            const totalMinutes = hour * 60 + min;
-
-            // 營業時間：週一～週五，10:30～19:30
-            const openMinutes = 10 * 60 + 30;
-            const closeMinutes = 19 * 60 + 30;
-
-            const isOpenDay = day >= 1 && day <= 6;
-            const isOpenTime = (totalMinutes >= 600 && totalMinutes < 840) || 
-            (totalMinutes >= 960 && totalMinutes < 1260);
-
-            const headerStatus = document.getElementById('headerOpenStatus');
-            const contactStatus = document.getElementById('contactOpenStatus');
-
-            // 根據營業狀態設置文字和顏色
-            const statusText = isOpenDay && isOpenTime ? '🟢 營業中' : '🔴 休息中';
-            const statusColor = isOpenDay && isOpenTime ? 'green' : 'red';
-
-            // 設置header和聯絡我們部分的狀態
-            if (headerStatus) {
-                headerStatus.textContent = statusText;
-                headerStatus.style.color = statusColor;
-            }
-
-            if (contactStatus) {
-                contactStatus.textContent = statusText;
-                contactStatus.style.color = statusColor;
-            }
-        }
-
-        /* 輪播 */
-        const carouselSlide = document.getElementById('carouselSlide');
-        const images = carouselSlide.querySelectorAll('img');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const dotsContainer = document.getElementById('dots');
-
-        let currentIndex = 0;
-
-        function updateCarousel() {
-            carouselSlide.style.transform = `translateX(-${currentIndex * 100}%)`;
-
-            dotsContainer.querySelectorAll('span').forEach((dot, i) => {
-                dot.classList.toggle('active', i === currentIndex);
+                modal.style.display = 'flex';
             });
+    });
+
+    /*營業狀態*/
+    function updateOpenStatus() {
+        const now = new Date();
+        const day = now.getDay(); // 0（日）～6（六）
+        const hour = now.getHours();
+        const min = now.getMinutes();
+        const totalMinutes = hour * 60 + min;
+
+        // 營業時間：週一～週五，10:30～19:30
+        const openMinutes = 10 * 60 + 30;
+        const closeMinutes = 19 * 60 + 30;
+
+        const isOpenDay = day >= 1 && day <= 6;
+        const isOpenTime = (totalMinutes >= 600 && totalMinutes < 840) || 
+        (totalMinutes >= 960 && totalMinutes < 1260);
+
+        const headerStatus = document.getElementById('headerOpenStatus');
+        const contactStatus = document.getElementById('contactOpenStatus');
+
+        // 根據營業狀態設置文字和顏色
+        const statusText = isOpenDay && isOpenTime ? '🟢 營業中' : '🔴 休息中';
+        const statusColor = isOpenDay && isOpenTime ? 'green' : 'red';
+
+        // 設置header和聯絡我們部分的狀態
+        if (headerStatus) {
+            headerStatus.textContent = statusText;
+            headerStatus.style.color = statusColor;
         }
 
-        // 建立圓點指示器
-        images.forEach((_, index) => {
-            const dot = document.createElement('span');
-            if (index === 0) dot.classList.add('active');
-            dot.addEventListener('click', () => {
-                currentIndex = index;
-                updateCarousel();
-            });
-            dotsContainer.appendChild(dot);
+        if (contactStatus) {
+            contactStatus.textContent = statusText;
+            contactStatus.style.color = statusColor;
+        }
+    }
+
+    /*招牌菜單輪播*/
+    const carouselSlide = document.getElementById('carouselSlide');
+    const images = carouselSlide.querySelectorAll('img');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const dotsContainer = document.getElementById('dots');
+
+    let currentIndex = 0;
+
+    function updateCarousel() {
+        const width = carouselSlide.clientWidth;
+        carouselSlide.style.transform = `translateX(-${currentIndex * 100}%)`;
+
+        // 更新 dots 狀態
+        dotsContainer.querySelectorAll('span').forEach((dot, i) => {
+            dot.classList.toggle('active', i === currentIndex);
         });
+    }
 
-        function nextSlide() {
-            currentIndex = (currentIndex + 1) % images.length;
+    // 建立圓點指示器
+    images.forEach((_, index) => {
+        const dot = document.createElement('span');
+        if (index === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => {
+            currentIndex = index;
             updateCarousel();
-        }
+        });
+        dotsContainer.appendChild(dot);
+    });
 
-        function prevSlide() {
-            currentIndex = (currentIndex - 1 + images.length) % images.length;
-            updateCarousel();
-        }
-
-        prevBtn.addEventListener('click', prevSlide);
-        nextBtn.addEventListener('click', nextSlide);
-
-        // 啟動初始與輪播
+    prevBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
         updateCarousel();
-        setInterval(nextSlide, 5000); // 每 5 秒輪播一次
+    });
 
-        // 設定營業狀態檢查
-        updateOpenStatus();
-        setInterval(updateOpenStatus, 60000);
+    nextBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % images.length;
+        updateCarousel();
+    });
+
+    // 初始更新
+    updateOpenStatus();
+    setInterval(updateOpenStatus, 60000);
+    updateCarousel();
     </script>
 </body>
 </html>
