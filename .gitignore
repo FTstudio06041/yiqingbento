@@ -1,4 +1,5 @@
 # 忽略圖片檔案
-
+*.png
+*.webp
 
 .DS_Store
