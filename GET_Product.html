@@ -97,9 +97,9 @@
       document.getElementById('productDescription').textContent = product.description || '';
 
       const imageEl = document.getElementById('productImage');
-      imageEl.src = `img/${product.id}.png`;
+      imageEl.src = `img/${product.id}.webp`;
       imageEl.onerror = () => {
-        console.warn(`圖片載入失敗：img/${product.id}.png`);
+        console.warn(`圖片載入失敗：img/${product.id}.webp`);
         imageEl.src = 'img/default.png';
       };
 
