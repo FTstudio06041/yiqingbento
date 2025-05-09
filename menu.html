@@ -6,19 +6,268 @@
   <title>宜親便當菜單</title>
   <style>
     body {
-      font-family: sans-serif;
-      background-color: #f8f8f8;
-      margin: 0;
-      padding: 20px;
+        font-family: "Noto Sans TC", "Helvetica", "Arial","LiHei Pro","黑體-繁","微軟正黑體", sans-serif;
+        margin: 0;
+        padding: 0;
+        background: #ffffff;
     }
-    h2.section-title {
-      font-size: 22px;
-      color: #b22222;
-      border-bottom: 2px solid #b22222;
-      display: inline-block;
-      padding-bottom: 5px;
-      margin-top: 40px;
+    /*背景*/
+    .circle {
+        position: fixed;
+        top: -50vmin;
+        left: -50vmin;
+        width: 115vmin;
+        height: 115vmin;
+        border-radius: 47% 53% 61% 39% / 45% 51% 49% 55%;
+        background-color: #d98600;
+        z-index: -1;
     }
+    .circle::after{
+        content: "";
+        position: inherit;
+        right: -50vmin;
+        bottom: -50vmin;
+        width: inherit;
+        height: inherit;
+        border-radius: inherit;
+        background: #311e00;
+        z-index: -1;
+    }
+
+    /*導覽列*/
+    header {
+        position: relative;
+        background-color: #ffffff;
+        padding: 1em 0;
+        text-align: left;
+        padding-left: 5%;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .name-status-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 5%;
+    }
+
+    header h1 {
+        margin: 0;
+        font-size: 2em;
+    }
+
+    .open-status {
+    font-size: 16px;
+    margin-top: 5px;
+    }
+
+    nav {
+        display: flex;
+        padding: 0.5em 2%;
+        justify-content: space-between;
+        align-items: center; 
+    }
+    .nav-links {
+        flex: 1;
+        text-align: right;
+    }
+    .nav-links ul li {
+        list-style: none;
+        display: inline-block;
+        padding: 6px;
+        padding-right: 10%;
+        position: relative;
+    }
+    .nav-links ul li a{
+        position: relative;
+        display: inline-block;
+        color: #000000;
+        text-decoration: none;
+        font-size: 20px;
+        transition: transform 0.2s ease, color 0.2s ease;
+    }
+    .nav-links ul li a:hover{
+        color: #d98600;
+        text-decoration: none;
+        transform: scale(1.3);
+    }         
+    
+    .nav-links ul li a.active {
+        color: #d98600;
+        font-weight: bold;
+        border-bottom: 2px solid #d98600;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 1em;
+    }
+
+    /*最新消息*/
+    #messages {
+    max-width: 700px;
+    margin: 0;
+    margin-right: auto;
+    padding-left: 1em;
+    }
+    .message {
+    background: hsla(0, 0%, 0%, 0); /* 半透明白底 */
+    backdrop-filter: blur(40px);           /* 模糊效果 */
+    -webkit-backdrop-filter: blur(10px);   /* Safari 支援 */
+    border-left: 6px solid #ff9d00;
+    padding: 16px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+    .message h3 {
+    margin: 0 0 10px 0;
+    font-size: 22px;
+    color: #ff9d00;
+    }
+    .message .date {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+    }
+    .message p {
+    margin: 0;
+    font-size: 16px;
+    white-space: pre-line;
+    }
+    #showMore {
+        outline: none;
+        border: none;
+    }
+    .modal-content {
+        position: relative;
+        width: 75vw; 
+        height: 50vh;
+        background: rgba(255, 255, 255, 0.875); 
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 15px;
+        padding: 2em;
+        overflow-y: auto;
+        scrollbar-width: none;
+        animation: modalFadeIn 0.1s ease-out;
+    }
+    .modal-fade-out {
+        animation: modalFadeOut 0.2s ease-out forwards;
+    }
+    .close {
+        position: fixed;
+        font-size: 1.8em;
+        top: 1em;
+        right: 1em;
+        cursor: pointer;
+        color: #333;
+        transition: transform 0.2s ease, color 0.2s ease;
+    }
+    .close:hover {
+        transform: scale(1.2);
+        color: #ff704d;
+    }
+
+    #modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: modalBgFadeIn 0.1s ease forwards;
+    }
+    #modal.fade-out {
+        animation: modalBgFadeOut 0.1s ease forwards;
+    }
+
+    @keyframes modalFadeIn {
+        0% {
+            opacity: 0;
+            transform: scale(0.8);
+        }
+        100% {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+    @keyframes modalFadeOut {
+        0% {
+            opacity: 1;
+            transform: scale(1);
+        }
+        100% {
+            opacity: 0;
+            transform: scale(0.8);
+        }
+    }
+    @keyframes modalBgFadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    @keyframes modalBgFadeOut {
+        from { opacity: 1; }
+        to { opacity: 0; }
+    }
+
+    footer {
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        padding: 1em 0;
+    }
+
+        footer p {
+            margin: 0;
+        }
+
+    .back-to-top {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #ff9966;
+        color: #fff;
+        padding: 0.6em 1em;
+        border-radius: 20%;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        text-decoration: none;
+        font-size: 1.5em;
+        text-align: center;
+        line-height: 1.5em;
+        display: flex;
+        transition: background-color 0.3s;
+    }
+
+    .back-to-top:hover {
+        background-color: #ff704d;
+    }
+
+    .section {
+        margin-bottom: 2em;
+    }
+
+    .section h2 {
+        font-size: 1.5em;
+        border-bottom: 2px solid #ffcc99;
+        padding-bottom: 0.5em;
+    }
+
+    .glass {
+        background: hsla(0, 0%, 100%, 0.8); /* 半透明白底 */
+        backdrop-filter: blur(10px);           /* 模糊效果 */
+        -webkit-backdrop-filter: blur(10px);   /* Safari 支援 */
+        border-radius: 15px;
+        padding: 2em;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+    
     .menu-container {
       display: flex;
       flex-wrap: wrap;
@@ -56,14 +305,161 @@
   </style>
 </head>
 <body>
+  <div class="circle"></div>
 
-  <h2 class="section-title">越南料理</h2>
-  <div class="menu-container" id="vietnamMenu"></div>
+  <header>
+      <nav>
+          <div class="name-status-wrapper">
+              <h1>宜親木盒便當</h1>
+              <div class="open-status" id="headerOpenStatus"></div>
+          </div>
+          <div class="nav-links">
+              <ul>
+                  <li><a href="index.html">首頁</a></li>
+                  <li><a href="javascript:void(0)" id="announcementLink">公告</a></li>
+                  <li><a href="menu.html">菜單</a></li>
+                  <li><a href="AboutME.html">關於我們</a></li>
+              </ul>
+          </div>
+      </nav>
+  </header>
 
-  <h2 class="section-title">便當系列</h2>
-  <div class="menu-container" id="bentoMenu"></div>
+  <div class="container">
+    <h2 class="section-title">越南料理</h2>
+    <div class="menu-container" id="vietnamMenu"></div>
+    <h2 class="section-title">便當系列</h2>
+    <div class="menu-container" id="bentoMenu"></div>
+  </div>
+
+
+  <div id="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close" id="closeModal">&times;</span>
+        <h2>所有公告</h2>
+        <div id="modalMessages"></div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 宜親木盒便當　｜　地址：花蓮縣壽豐鄉中正路106號　｜　訂餐電話：03-8662120</p>
+  </footer>
+
+  <a href="#top" class="back-to-top" id="backToTop">↑</a>
 
   <script>
+    /*導覽列*/
+    const currentPage = location.pathname.split("/").pop();
+        const navLinks = document.querySelectorAll(".nav-links ul li a");
+        navLinks.forEach(link => {
+            const linkPage = link.getAttribute("href");
+
+            if (linkPage === currentPage || (linkPage === "index.html" && currentPage === "")) {
+                link.classList.add("active");
+            }
+        });
+
+    /*回到頂部*/
+    const backToTopButton = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 200) {
+            backToTopButton.style.display = 'block';
+        } else {
+            backToTopButton.style.display = 'none';
+        }
+    });
+
+    /*公告*/
+    const repoOwner = 'FTstudio06041';
+    const repoName = 'yiqingbento';
+    const targetUsers = ['Sumo0711', 'user2', 'user3'];
+    const showMoreBtn = document.getElementById('showMore');
+    const modal = document.getElementById('modal');
+    const closeModal = document.getElementById('closeModal');
+    const modalMessages = document.getElementById('modalMessages');
+    const announcementLink = document.getElementById('announcementLink');
+
+    function formatDate(isoString) {
+        const date = new Date(isoString);
+        const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+        return date.toLocaleDateString('zh-TW', options);
+    }
+    closeModal.addEventListener('click', () => {
+        modal.classList.add('fade-out');
+        setTimeout(() => {
+            modal.style.display = 'none';
+            modal.classList.remove('fade-out');
+        }, 100);
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target == modal) {
+            modal.classList.add('fade-out');
+            setTimeout(() => {
+                modal.style.display = 'none';
+                modal.classList.remove('fade-out');
+            }, 100);
+        }
+    });
+
+    announcementLink.addEventListener('click', () => {
+        modalMessages.innerHTML = ''; // 清空 modal 中內容
+
+        fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/issues`)
+            .then(response => response.json())
+            .then(issues => {
+                const validIssues = issues.filter(issue => targetUsers.includes(issue.user.login));
+                validIssues.forEach(issue => {
+                    const div = document.createElement('div');
+                    div.classList.add('message');
+                    div.innerHTML = `
+                        <h3>${issue.title}</h3>
+                        <p>${issue.body}</p>
+                        <div class="date">發布日期：${formatDate(issue.created_at)}</div>
+                    `;
+                    modalMessages.appendChild(div);
+                });
+                modal.style.display = 'flex';
+            });
+    });
+
+    /*營業狀態*/
+    function updateOpenStatus() {
+        const now = new Date();
+        const day = now.getDay(); // 0（日）～6（六）
+        const hour = now.getHours();
+        const min = now.getMinutes();
+        const totalMinutes = hour * 60 + min;
+
+        // 營業時間：週一～週五，10:30～19:30
+        const openMinutes = 10 * 60 + 30;
+        const closeMinutes = 19 * 60 + 30;
+
+        const isOpenDay = day >= 1 && day <= 6;
+        const isOpenTime = (totalMinutes >= 600 && totalMinutes < 840) || 
+        (totalMinutes >= 960 && totalMinutes < 1260);
+
+        const headerStatus = document.getElementById('headerOpenStatus');
+        const contactStatus = document.getElementById('contactOpenStatus');
+
+        // 根據營業狀態設置文字和顏色
+        const statusText = isOpenDay && isOpenTime ? '🟢 營業中' : '🔴 休息中';
+        const statusColor = isOpenDay && isOpenTime ? 'green' : 'red';
+
+        // 設置header和聯絡我們部分的狀態
+        if (headerStatus) {
+            headerStatus.textContent = statusText;
+            headerStatus.style.color = statusColor;
+        }
+
+        if (contactStatus) {
+            contactStatus.textContent = statusText;
+            contactStatus.style.color = statusColor;
+        }
+    }
+    // 設定營業狀態檢查
+    updateOpenStatus();
+    setInterval(updateOpenStatus, 60000);
+
     fetch('Products.json')
       .then(response => response.json())
       .then(data => {
