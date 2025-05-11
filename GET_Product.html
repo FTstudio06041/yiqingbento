@@ -113,7 +113,7 @@ const urlParams = new URLSearchParams(window.location.search);
 
    async function loadProduct() {
   try {
-     const res = await fetch('Products.json?v=2.4.0'); // ← 每次更新版本時修改這個數字
+     const res = await fetch('Products.json?v=1.0.0'); // ← 每次更新版本時修改這個數字
       const data = await res.json();
       const product = data.products.find(p => String(p.id) === String(productId));
 
