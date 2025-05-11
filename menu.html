@@ -466,33 +466,49 @@
     updateOpenStatus();
     setInterval(updateOpenStatus, 60000);
 
-    fetch('Products.json')
-      .then(response => response.json())
-      .then(data => {
-        const vietnamMenu = document.getElementById('vietnamMenu');
-        const bentoMenu = document.getElementById('bentoMenu');
+    //隨時更新快取問題
+    async function fetchProducts() {
+  const cached = localStorage.getItem('productsCache');
+  const res = await fetch('Products.json');
+  const latest = await res.json();
 
-        data.products.forEach(product => {
-          const item = document.createElement('a');
-          item.href = `GET_Product.html?id=${product.id}`;
-          item.className = 'menu-item';
-          item.innerHTML = `
-            <img src="img/${product.id}.webp" alt="${product.name}">
-            <div class="name">${product.name}</div>
-            <div class="price">NT$ ${product.price}</div>
-          `;
+  if (cached) {
+    const cachedData = JSON.parse(cached);
+    if (cachedData.version !== latest.version) {
+      console.log('⚠️ JSON 版本更新，重新快取');
+      localStorage.setItem('productsCache', JSON.stringify(latest));
+    }
+  } else {
+    localStorage.setItem('productsCache', JSON.stringify(latest));
+  }
 
-          if (parseInt(product.id) <= 20) {
-            vietnamMenu.appendChild(item);
-          } else {
-            bentoMenu.appendChild(item);
-          }
-        });
-      })
-      .catch(error => {
-        console.error('無法載入菜單：', error);
-        document.body.innerHTML += '<p style="color:red;">無法載入菜單資料。</p>';
-      });
+  return latest.products;
+}
+    
+fetchProducts().then(products => {
+  const vietnamMenu = document.getElementById('vietnamMenu');
+  const bentoMenu = document.getElementById('bentoMenu');
+
+  products.forEach(product => {
+    const item = document.createElement('a');
+    item.href = `GET_Product.html?id=${product.id}`;
+    item.className = 'menu-item';
+    item.innerHTML = `
+      <img src="img/${product.id}.webp" alt="${product.name}">
+      <div class="name">${product.name}</div>
+      <div class="price">NT$ ${product.price}</div>
+    `;
+
+    if (parseInt(product.id) <= 20) {
+      vietnamMenu.appendChild(item);
+    } else {
+      bentoMenu.appendChild(item);
+    }
+  });
+});
+
+
+    
   </script>
 </body>
 </html>
