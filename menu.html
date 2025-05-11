@@ -467,47 +467,36 @@
     setInterval(updateOpenStatus, 60000);
 
     //隨時更新快取問題
-    async function fetchProducts() {
-  const cached = localStorage.getItem('productsCache');
-  const res = await fetch('Products.json');
-  const latest = await res.json();
+    const VERSION = '1.0.0';
+    console.log(`📦 載入 JSON 版本：${VERSION}`);
 
-  if (cached) {
-    const cachedData = JSON.parse(cached);
-    if (cachedData.version !== latest.version) {
-      console.log('⚠️ JSON 版本更新，重新快取');
-      localStorage.setItem('productsCache', JSON.stringify(latest));
-    }
-  } else {
-    localStorage.setItem('productsCache', JSON.stringify(latest));
-  }
+    fetch('Products.json?v=' + VERSION)
+      .then(response => response.json())
+      .then(data => {
+        const vietnamMenu = document.getElementById('vietnamMenu');
+        const bentoMenu = document.getElementById('bentoMenu');
 
-  return latest.products;
-}
-    
-fetchProducts().then(products => {
-  const vietnamMenu = document.getElementById('vietnamMenu');
-  const bentoMenu = document.getElementById('bentoMenu');
+        data.products.forEach(product => {
+          const item = document.createElement('a');
+          item.href = `GET_Product.html?id=${product.id}`;
+          item.className = 'menu-item';
+          item.innerHTML = `
+            <img src="img/${product.id}.webp" alt="${product.name}">
+            <div class="name">${product.name}</div>
+            <div class="price">NT$ ${product.price}</div>
+          `;
 
-  products.forEach(product => {
-    const item = document.createElement('a');
-    item.href = `GET_Product.html?id=${product.id}`;
-    item.className = 'menu-item';
-    item.innerHTML = `
-      <img src="img/${product.id}.webp" alt="${product.name}">
-      <div class="name">${product.name}</div>
-      <div class="price">NT$ ${product.price}</div>
-    `;
-
-    if (parseInt(product.id) <= 20) {
-      vietnamMenu.appendChild(item);
-    } else {
-      bentoMenu.appendChild(item);
-    }
-  });
-});
-
-
+          if (parseInt(product.id) <= 20) {
+            vietnamMenu.appendChild(item);
+          } else {
+            bentoMenu.appendChild(item);
+          }
+        });
+      })
+      .catch(error => {
+        console.error('無法載入菜單：', error);
+        document.body.innerHTML += '<p style="color:red;">無法載入菜單資料。</p>';
+      });
     
   </script>
 </body>
