@@ -12,7 +12,7 @@
     { "id": "9", "name": "台灣乾麵", "englishName": "Noodles without soup", "price": 70, "description": "台式乾麵，香氣撲鼻" },
     { "id": "10", "name": "越南乾麵", "englishName": "Vietnamese noodles without soup", "price": 70, "description": "越式風味，酸甜開胃" },
     { "id": "11", "name": "炸春捲涼拌米線", "englishName": "Cold rice thread noodles with fried spring rolls", "price": 100, "description": "酥脆春捲搭配清涼米線" },
-    { "id": "12", "name": "牛肉冬粉", "englishName": "Beef clear noodles", "price": 100, "description": "清湯冬粉搭配厚切牛肉" },
+    { "id": "12", "name": "牛肉冬粉", "englishName": "Beef clear noodles", "price": 100, "description": "清湯冬粉搭配牛肉，完美絕配" },
     { "id": "13", "name": "豬肉冬粉", "englishName": "Pork clear noodles", "price": 80, "description": "輕盈湯頭與嫩豬肉完美融合" },
     { "id": "14", "name": "豬排骨冬粉", "englishName": "Pork ribs clear noodles", "price": 90, "description": "排骨湯鮮香，冬粉滑順" },
     { "id": "15", "name": "雞肉冬粉", "englishName": "Chicken clear noodles", "price": 90, "description": "雞湯濃郁，搭配爽口冬粉" },
