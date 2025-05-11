@@ -151,6 +151,27 @@
     }
 
     loadProduct();
+
+    //檢查圖片路徑bug
+    data.products.forEach(product => {
+  const item = document.createElement('a');
+  item.href = `GET_Product.html?id=${product.id}`;
+  item.className = 'menu-item';
+  item.innerHTML = `
+    <img src="img/${product.id}.webp" alt="${product.name}">
+    <div class="name">${product.name}</div>
+    <div class="price">NT$ ${product.price}</div>
+  `;
+
+  console.log(`商品 ${product.id} (${product.name}) → 圖片路徑：img/${product.id}.webp`);
+
+  if (parseInt(product.id) <= 20) {
+    vietnamMenu.appendChild(item);
+  } else {
+    bentoMenu.appendChild(item);
+  }
+});
+
   </script>
 </body>
 </html>
