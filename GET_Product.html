@@ -108,32 +108,14 @@
   </div>
 
   <script>
-async function getUpdatedProducts() {
-  const cached = localStorage.getItem('productsCache');
-  const res = await fetch('Products.json');
-  const latest = await res.json();
-
-  if (cached) {
-    const cachedData = JSON.parse(cached);
-    if (cachedData.version !== latest.version) {
-      console.log('✅ 快取更新：版本不同，重新載入 Products.json');
-      localStorage.setItem('productsCache', JSON.stringify(latest));
-    }
-  } else {
-    localStorage.setItem('productsCache', JSON.stringify(latest));
-  }
-
-  return latest.products;
-}
-    
-    const urlParams = new URLSearchParams(window.location.search);
-    const productId = urlParams.get('id');
+const urlParams = new URLSearchParams(window.location.search);
+  const productId = urlParams.get('id');
 
    async function loadProduct() {
   try {
-    const products = await getUpdatedProducts(); // ← 用這行取代舊的方式
-
-    const product = products.find(p => String(p.id) === String(productId));
+     const res = await fetch('Products.json?v=2.4.0'); // ← 每次更新版本時修改這個數字
+      const data = await res.json();
+      const product = data.products.find(p => String(p.id) === String(productId));
 
     if (product) {
       document.getElementById('productName').textContent = product.name;
