@@ -108,48 +108,58 @@
   </div>
 
   <script>
+async function getUpdatedProducts() {
+  const cached = localStorage.getItem('productsCache');
+  const res = await fetch('Products.json');
+  const latest = await res.json();
+
+  if (cached) {
+    const cachedData = JSON.parse(cached);
+    if (cachedData.version !== latest.version) {
+      console.log('✅ 快取更新：版本不同，重新載入 Products.json');
+      localStorage.setItem('productsCache', JSON.stringify(latest));
+    }
+  } else {
+    localStorage.setItem('productsCache', JSON.stringify(latest));
+  }
+
+  return latest.products;
+}
+    
     const urlParams = new URLSearchParams(window.location.search);
     const productId = urlParams.get('id');
 
-    async function loadProduct() {
-      try {
-        let data;
-        if (localStorage.getItem('productsCache')) {
-          data = JSON.parse(localStorage.getItem('productsCache'));
-        } else {
-          const res = await fetch('Products.json');
-          data = await res.json();
-          localStorage.setItem('productsCache', JSON.stringify(data));
-        }
+   async function loadProduct() {
+  try {
+    const products = await getUpdatedProducts(); // ← 用這行取代舊的方式
 
-        const product = data.products.find(p => String(p.id) === String(productId));
+    const product = products.find(p => String(p.id) === String(productId));
 
-        if (product) {
-          document.getElementById('productName').textContent = product.name;
-          document.getElementById('productEnglishName').textContent = product.englishName || '';
-          document.getElementById('productPrice').textContent = `售價：NT$ ${product.price}`;
-          document.getElementById('productDescription').textContent = product.description || '';
+    if (product) {
+      document.getElementById('productName').textContent = product.name;
+      document.getElementById('productEnglishName').textContent = product.englishName || '';
+      document.getElementById('productPrice').textContent = `售價：NT$ ${product.price}`;
+      document.getElementById('productDescription').textContent = product.description || '';
 
-          const imageEl = document.getElementById('productImage');
-          imageEl.src = `img/${product.id}.webp`;
-          imageEl.onerror = () => {
-            console.warn(`圖片載入失敗：img/${product.id}.webp`);
-            imageEl.src = 'img/default.png';
-          };
+      const imageEl = document.getElementById('productImage');
+      imageEl.src = `img/${product.id}.webp`;
+      imageEl.onerror = () => {
+        console.warn(`圖片載入失敗：img/${product.id}.webp`);
+        imageEl.src = 'img/default.png';
+      };
 
-          document.getElementById('backLink').href = 'menu.html';
-        } else {
-          document.getElementById('productName').textContent = '找不到此商品';
-          document.getElementById('errorMsg').textContent = '商品編號錯誤或不存在';
-          document.getElementById('productImage').style.display = 'none';
-        }
-      } catch (error) {
-        console.error('載入失敗：', error);
-        document.getElementById('productName').textContent = '發生錯誤';
-        document.getElementById('errorMsg').textContent = '⚠ 無法載入商品資訊，請稍後再試';
-      }
+      document.getElementById('backLink').href = 'menu.html';
+    } else {
+      document.getElementById('productName').textContent = '找不到此商品';
+      document.getElementById('errorMsg').textContent = '商品編號錯誤或不存在';
+      document.getElementById('productImage').style.display = 'none';
     }
-
+  } catch (error) {
+    console.error('載入失敗：', error);
+    document.getElementById('productName').textContent = '發生錯誤';
+    document.getElementById('errorMsg').textContent = '⚠ 無法載入商品資訊，請稍後再試';
+  }
+}
     loadProduct();
 
   </script>
