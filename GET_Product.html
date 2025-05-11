@@ -113,8 +113,11 @@ const urlParams = new URLSearchParams(window.location.search);
 
    async function loadProduct() {
   try {
-     const res = await fetch('Products.json?v=1.0.0'); // ← 每次更新版本時修改這個數字
-      const data = await res.json();
+      const version = "1.0.0"; // ✅ 改這裡的版本號
+    const res = await fetch(`Products.json?v=${version}`);
+    const data = await res.json();
+    console.log(`📦 載入 Products.json 版本：v${version}`);
+    
       const product = data.products.find(p => String(p.id) === String(productId));
 
     if (product) {
