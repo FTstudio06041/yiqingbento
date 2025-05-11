@@ -116,6 +116,9 @@ const urlParams = new URLSearchParams(window.location.search);
       const version = "1.0.0"; // ✅ 改這裡的版本號
     const res = await fetch(`Products.json?v=${version}`);
     const data = await res.json();
+    if (data.version !== PRODUCTS_VERSION) {
+  console.warn(`⚠ JSON版本與程式版本不一致（JSON: ${data.version}，JS: ${PRODUCTS_VERSION}）`);
+}
     console.log(`📦 載入 Products.json 版本：v${version}`);
     
       const product = data.products.find(p => String(p.id) === String(productId));
