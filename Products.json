@@ -1,5 +1,5 @@
 {
-  "version": "1.0.1",
+  "version": "1.0.3",
   "products": [
     { "id": "1", "name": "牛肉河粉", "englishName": "Beef rice noodles", "price": 100, "description": "鮮嫩牛肉搭配清爽湯頭" },
     { "id": "2", "name": "豬肉河粉", "englishName": "Pork rice noodles", "price": 80, "description": "經典豬肉風味，濃郁可口" },
