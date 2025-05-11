@@ -1,5 +1,5 @@
 {
-  "version": "1.0.3",
+  "version": "1.0.0",
   "products": [
     { "id": "1", "name": "牛肉河粉", "englishName": "Beef rice noodles", "price": 100, "description": "鮮嫩牛肉搭配清爽湯頭" },
     { "id": "2", "name": "豬肉河粉", "englishName": "Pork rice noodles", "price": 80, "description": "經典豬肉風味，濃郁可口" },
@@ -20,7 +20,7 @@
     { "id": "17", "name": "一個炸春捲", "englishName": "One fried spring rolls", "price": 30, "description": "外酥內嫩的小巧點心" },
     { "id": "18", "name": "兩個炸春捲", "englishName": "Two fried spring rolls", "price": 50, "description": "外酥內嫩的小巧點心" },
     { "id": "19", "name": "一個炸蝦", "englishName": "One fried Shrimp", "price": 40, "description": "外酥內嫩的小巧點心" },
-    { "id": "20", "name": "兩個炸蝦", "englishName": "Two fried Shrimp", "price": 70, "description": "外酥內嫩的小巧點心×2" },
+    { "id": "20", "name": "兩個炸蝦", "englishName": "Two fried Shrimp", "price": 70, "description": "外酥內嫩的小巧點心，雙倍滿足" },
     { "id": "21","name": "經濟飯包","englishName": "Budget Bento","price": 60,"description": "經濟實惠的簡餐選擇"},
     { "id": "22","name": "招牌飯包","englishName": "Signature Bento","price": 80,"description": "人氣首選的豐富便當"},
     { "id": "23","name": "排骨飯包","englishName": "Pork Chop Bento","price": 80,"description": "酥炸排骨配經典配菜"},
