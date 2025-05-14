@@ -111,44 +111,46 @@
   const version = "1.0.0";
   const urlParams = new URLSearchParams(window.location.search);
   const productId = urlParams.get('id');
+
   async function loadProduct() {
-  try {
-    const res = await fetch(`Products.json?v=${version}`);
-    const data = await res.json();
-    if (data.version !== PRODUCTS_VERSION) {
-      console.warn(`⚠ JSON版本與程式版本不一致（JSON: ${data.version}，JS: ${PRODUCTS_VERSION}）`);
-  }
-    console.log(`📦 載入 Products.json 版本：v${version}`);
-    
-    const product = data.products.find(p => String(p.id) === String(productId));
+    try {
+      const res = await fetch(`Products.json?v=${version}`);
+      const data = await res.json();
 
-    if (product) {
-      document.getElementById('productName').textContent = product.name;
-      document.getElementById('productEnglishName').textContent = product.englishName || '';
-      document.getElementById('productPrice').textContent = `售價：NT$ ${product.price}`;
-      document.getElementById('productDescription').textContent = product.description || '';
+      if (data.version !== version) {
+        console.warn(`⚠ JSON版本與程式版本不一致（JSON: ${data.version}，JS: ${version}）`);
+      }
 
-      const imageEl = document.getElementById('productImage');
-      imageEl.src = `img/${product.id}.webp`;
-      imageEl.onerror = () => {
-        console.warn(`圖片載入失敗：img/${product.id}.webp`);
-        imageEl.src = 'img/default.png';
-      };
+      console.log(`📦 載入 Products.json 版本：v${version}`);
 
-      document.getElementById('backLink').href = 'menu.html';
-    } else {
-      document.getElementById('productName').textContent = '找不到此商品';
-      document.getElementById('errorMsg').textContent = '商品編號錯誤或不存在';
-      document.getElementById('productImage').style.display = 'none';
+      const product = data.products.find(p => String(p.id) === String(productId));
+
+      if (product) {
+        document.getElementById('productName').textContent = product.name;
+        document.getElementById('productEnglishName').textContent = product.englishName || '';
+        document.getElementById('productPrice').textContent = `售價：NT$ ${product.price}`;
+        document.getElementById('productDescription').textContent = product.description || '';
+
+        const imageEl = document.getElementById('productImage');
+        imageEl.src = `img/${product.id}.webp`;
+        imageEl.onerror = () => {
+          console.warn(`圖片載入失敗：img/${product.id}.webp`);
+          imageEl.src = 'img/default.png';
+        };
+
+        document.getElementById('backLink').href = 'menu.html';
+      } else {
+        document.getElementById('productName').textContent = '找不到此商品';
+        document.getElementById('errorMsg').textContent = '商品編號錯誤或不存在';
+        document.getElementById('productImage').style.display = 'none';
+      }
+      } catch (error) {
+        console.error('載入失敗：', error);
+        document.getElementById('productName').textContent = '發生錯誤';
+        document.getElementById('errorMsg').textContent = '⚠ 無法載入商品資訊，請稍後再試';
     }
-  } catch (error) {
-    console.error('載入失敗：', error);
-    document.getElementById('productName').textContent = '發生錯誤';
-    document.getElementById('errorMsg').textContent = '⚠ 無法載入商品資訊，請稍後再試';
   }
-}
-    loadProduct();
-
+  loadProduct();
   </script>
 </body>
 </html>
