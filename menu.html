@@ -304,6 +304,18 @@
       margin-bottom: 10px;
       color: #b22222;
     }
+
+    @media (max-width: 600px) {
+        html {
+            transform: scale(0.5);
+            transform-origin: top left;
+            width: 200%;
+        }
+
+        body {
+            overflow-x: hidden; /* 避免橫向捲軸 */
+        }
+    }
   </style>
 </head>
 <body>
