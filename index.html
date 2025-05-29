@@ -413,12 +413,17 @@
             }
 
             @media (max-width: 600px) {
-                body {
+                html {
                     transform: scale(0.5);
                     transform-origin: top left;
-                    width: auto;
+                    width: 200%;
+                }
+
+                body {
+                    overflow-x: hidden; /* 避免橫向捲軸 */
                 }
             }
+
 
     </style>
 </head>
