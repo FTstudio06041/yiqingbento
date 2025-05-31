@@ -501,4 +501,15 @@
           if (parseInt(product.id) <= 20) {
             vietnamMenu.appendChild(item);
           } else {
- 
+            bentoMenu.appendChild(item);
+          }
+        });
+      })
+      .catch(error => {
+        console.error('無法載入菜單：', error);
+        document.body.innerHTML += '<p style="color:red;">無法載入菜單資料。</p>';
+      });
+    
+  </script>
+</body>
+</html>
